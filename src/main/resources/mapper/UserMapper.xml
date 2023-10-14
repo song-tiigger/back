@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    <mapper namespace="com.go.together.Mapper.UserMapper">
+
+<!--유저 회원가입-->
+    <insert id="insert">
+        <selectKey keyProperty="userNumber" order="BEFORE" resultType="long">
+            SELECT SEQ_USER.NEXTVAL FROM DUAL
+        </selectKey>
+        insert into TBL_USER (USER_NUMBER, USER_NAME, USER_ID, USER_PASSWORD, USER_EMAIL, USER_ADDRESS_NUMBER,USER_ADDRESS1,USER_ADDRESS2,USER_ADDRESS3
+        , USER_PHONE_NUMBER)
+        values (#{userNumber},#{userName},#{userId},#{userPassword},#{userEmail},#{userAddressNumber},#{userAddress1},#{userAddress2},#{userAddress3},
+          ,#{userPhoneNumber})
+    </insert>
+<!--유저 로그인-->
+    <select id="selectUserNumber" resultType="long">
+        SELECT USER_NUMBER
+        FROM TBL_USER
+        WHERE USER_ID=#{userId} AND USER_PASSWORD=#{userPassword}
+    </select>
+
+    <!-- 아이디 찾기: 이름과 핸드폰 번호로 아이디 조회 -->
+    <select id="findUserId" resultType="string">
+        SELECT USER_ID
+        FROM TBL_USER
+        WHERE USER_NAME = #{userName} AND USER_PHONE_NUMBER = #{userPhoneNumber}
+    </select>
+
+    <!-- 비밀번호 찾기: 아이디, 이름, 핸드폰 번호로 비밀번호 조회 -->
+    <select id="findUserPassword" resultType="string">
+        SELECT USER_PASSWORD
+        FROM TBL_USER
+        WHERE USER_ID = #{userId} AND USER_NAME = #{userName} AND USER_PHONE_NUMBER = #{userPhoneNumber}
+    </select>
+
+<!--수정 -->
+    <update id="update">
+        update TBL_USER
+         SET
+            USER_NAME = #{userName},
+            USER_ID = #{userId},
+            USER_PASSWORD = #{userPassword},
+            USER_EMAIL = #{userEmail},
+            USER_ADDRESS_NUMBER = #{userAddressNumber},
+            USER_ADDRESS1 = #{userAddress1},
+            USER_ADDRESS2 = #{userAddress2},
+            USER_ADDRESS3 = #{userAddress3},
+            USER_PHONE_NUMBER = #{userPhoneNumber}
+        where USER_NUMBER=#{userNumber}
+    </update>
+
+</mapper>
+
