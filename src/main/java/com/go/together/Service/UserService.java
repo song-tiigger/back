@@ -65,7 +65,6 @@ public class UserService {
             throw new IllegalArgumentException("수정할 회원정보 누락");
         }
         userMapper.update(userDto);
-
     }
 
 }
