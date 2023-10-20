@@ -1,6 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
     <mapper namespace="com.go.together.Mapper.FileMapper">
+<insert id="insert">
+    INSERT INTO TBL_FILE(FILE_NUMBER,FILE_NAME,FILE_UPLOAD_PATH,FILE_UUID,BOARD_NUMBER)
+        VALUES (SEQ_FILD.NEXTVAL,#{fileName},#{fileUploadPath},#{fildUuid},#{boardNumber})
+</insert>
+
+    <delete id="delete">
+        DELETE FROM TBL_FILE
+        WHERE FILE_NUMBER = #{fileNumber}
+    </delete>
+
+    <select id="selectList" resultType="fileDto">
+    SELECT FILE_NUMBER, FILE_NAME, FILE_UPLOAD_PATH,FILE_UUID,PRODUCT_NUMBER
+        FROM TBL_FILE
+        WHERE PRODUCT_NUMBER=#{productNumber}
+    </select>
+
 
 </mapper>
 
