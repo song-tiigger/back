@@ -42,8 +42,12 @@ dependencies {
     // 쿼리 확인라이브러리
 
     implementation 'org.bgee.log4jdbc-log4j2:log4jdbc-log4j2-jdbc4.1:1.16'
-
-
+    
+    
+    
+//썸네일 처리 라이브러리
+// https://mvnrepository.com/artifact/net.coobird/thumbnailator
+    implementation 'net.coobird:thumbnailator:0.4.19'
 
 }
 

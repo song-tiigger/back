@@ -13,6 +13,8 @@ public class ProductDto {
     private Long categoryMinorCode;
     private String productName;
     private Double productPrice;
+    private Double discountRate; // 추가: 할인율
+    private Double discountPrice; // 추가: 할인가
     private String productExplanation;
     private int productQuantity;
     private String productSize;

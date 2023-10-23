@@ -14,30 +14,30 @@ public class UserService {
     private final UserMapper userMapper;
 
     //회원 등록
-    public void register(UserDto userDto) {
+    public int register(UserDto userDto) {
         if (userDto == null) {
             throw new IllegalArgumentException("회원정보누락!");
         }
-        userMapper.insert(userDto);
+      return  userMapper.insert(userDto);
 
     }
 
     /**
      * @param userId
-     * @param userPassword
+     * @param
      * @return
      * @throws IllegalArgumentException 존재하지 않는 회원 id,pw로 조회하는 경우
      */
 
     //회원 번호 조회하기 (아이디.패스워드)
     @Transactional(readOnly = true)
-    public Long findUserNumber(String userId, String userPassword) {
-        if (userId == null || userPassword == null) {
+    public Long findUserNumber(String userId) {
+        if (userId == null) {
             throw new IllegalArgumentException("아이디 패스워드 누락");
         }
 
 
-        return Optional.ofNullable(userMapper.selectUserNumber(userId, userPassword))
+        return Optional.ofNullable(userMapper.selectUserNumber(userId))
                 .orElseThrow(() -> {
                     throw new IllegalArgumentException("존재하지 않는 회원입니다.");
                 });

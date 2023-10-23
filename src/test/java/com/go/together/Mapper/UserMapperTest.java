@@ -33,12 +33,12 @@ public class UserMapperTest {
     @Test
     void insert() {
         userMapper.insert(userDto);
-        assertThat(userMapper.selectUserNumber(userDto.getUserId(),userDto.getUserPassword()))
+        assertThat(userMapper.selectUserNumber(userDto.getUserId()))
                 .isEqualTo(userDto.getUserNumber());
     }
 
     @Test
     void selectUserNumber() {
-        userMapper.selectUserNumber("gg","1234");
+        userMapper.selectUserNumber("gg");
     }
 }

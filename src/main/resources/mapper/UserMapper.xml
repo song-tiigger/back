@@ -16,7 +16,7 @@
     <select id="selectUserNumber" resultType="long">
         SELECT USER_NUMBER
         FROM TBL_USER
-        WHERE USER_ID=#{userId} AND USER_PASSWORD=#{userPassword}
+        WHERE USER_ID=#{userId}
     </select>
 
     <!-- 아이디 찾기: 이름과 핸드폰 번호로 아이디 조회 -->

@@ -7,10 +7,10 @@ import org.apache.ibatis.annotations.Param;
 @Mapper
 public interface UserMapper {
     //유저 회원가입
-    public void insert(UserDto userDto);
+    public int insert(UserDto userDto);
 
     //유저 로그인
-    public Long selectUserNumber(@Param("userId")String userId , @Param("userPassword")String userPassword);
+    public Long selectUserNumber(@Param("userId")String userId);
 
     //아이디찾기
     public String findUserId(@Param("userName")String userName, @Param("userPhoneNumber") String userPhoneNumber);
