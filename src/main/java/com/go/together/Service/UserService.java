@@ -14,11 +14,11 @@ public class UserService {
     private final UserMapper userMapper;
 
     //회원 등록
-    public int register(UserDto userDto) {
+    public void register(UserDto userDto) {
         if (userDto == null) {
             throw new IllegalArgumentException("회원정보누락!");
         }
-      return  userMapper.insert(userDto);
+        userMapper.insert(userDto);
 
     }
 
