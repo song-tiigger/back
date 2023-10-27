@@ -40,20 +40,34 @@ public class UserController {
 
     //회원가입이 정상적으로 되면 1반환 아니면 0
     @PostMapping("/join")
-    public void userRegister(@RequestBody UserDto userDto) {
-     userService.register(userDto);
-        System.out.println("회원이 완료되었습니다 ! ! ! ! !");
-    }
+    public int userRegister(@RequestBody UserDto userDto) {
+        userService.register(userDto);
 
+        System.out.println("회원이 완료되었습니다 ! ! ! ! !");
+        return userService.register(userDto);
+    }
 
     //로그인 아이디에 따라 UserNumber 배정됨
     @PostMapping("/login")
-    public Long login(@RequestBody String userId) {
-        Long userNumber = userService.findUserNumber(userId);
-        return userNumber;
+    public Long login(@RequestParam("userId") String userId, @RequestParam("userPassword") String userPassword) {
+        System.out.println("userId   "+userId+" ///// "+userPassword);
+        return userService.findUserNumber(userId, userPassword);
+    }
+
+
+    //내 정보 수정 할때 쿼리
+    @PostMapping("/modify")
+    public void modifyMy(@RequestBody UserDto userDto) {
+
+       userService.modify(userDto);
 
     }
 }
+
+
+
+
+
 
 
 

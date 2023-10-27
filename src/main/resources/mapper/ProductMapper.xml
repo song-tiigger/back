@@ -3,5 +3,43 @@
     <mapper namespace="com.go.together.Mapper.ProductMapper">
 
 
+    <insert id="insertProduct">
+        <selectKey keyProperty="productNumber" order="BEFORE" resultType="long">
+            SELECT SEQ_PRODUCT.NEXTVAL FROM DUAL
+        </selectKey>
+        INSERT INTO TBL_PRODUCT
+        (
+        PRODUCT_NUMBER,
+        CATEGORY_MINOR_CODE,
+        PRODUCT_NAME,
+        PRODUCT_PRICE,
+        DISCOUNT_RATE,
+        PRODUCT_EXPLANATION,
+        PRODUCT_QUANTITY,
+        PRODUCT_SIZE
+        )
+        VALUES
+        ( #{productNumber},
+        #{categoryMinorCode},
+        #{productName},
+        #{productPrice},
+        #{discountRate},
+        #{productExplanation},
+        #{productQuantity},
+        #{productSize}
+        )
+    </insert>
+
+
+
+    <delete id="delete">
+        DELETE FROM TBL_BOARD
+        WHERE PRODUCT_NUMBER = #{productNumber}
+    </delete>
+
+    <select id="selectTotal" resultType="_int">
+        SELECT COUNT(PRODUCT_NUMBER) FROM TBL_PRODUCT
+    </select>
+    
 </mapper>
 

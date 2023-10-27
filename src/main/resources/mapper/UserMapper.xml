@@ -3,32 +3,32 @@
     <mapper namespace="com.go.together.Mapper.UserMapper">
 
 <!--유저 회원가입-->
-<!--    <insert id="insert">-->
-<!--        <selectKey keyProperty="userNumber" order="BEFORE" resultType="long">-->
-<!--            SELECT SEQ_USER.NEXTVAL FROM DUAL-->
-<!--        </selectKey>-->
-<!--        insert into TBL_USER (USER_NUMBER, USER_NAME, USER_ID, USER_PASSWORD, USER_EMAIL,-->
-<!--        USER_ADDRESS_NUMBER,USER_ADDRESS1,USER_ADDRESS2,-->
-<!--        USER_ADDRESS3 , USER_PHONE_NUMBER)-->
-<!--        values (#{userNumber}, #{userName}, #{userId}, #{userPassword}, #{userEmail},-->
-<!--        #{userAddressNumber}, #{userAddress1}, #{userAddress2},-->
-<!--        #{userAddress3} ,#{userPhoneNumber})-->
-<!--    </insert>-->
-
-
-
-
     <insert id="insert">
         <selectKey keyProperty="userNumber" order="BEFORE" resultType="long">
             SELECT SEQ_USER.NEXTVAL FROM DUAL
         </selectKey>
-        insert into TBL_USER (USER_NUMBER, USER_NAME, USER_PASSWORD, USER_EMAIL)
-        values (#{userNumber}, #{userName}, #{userPassword}, #{userEmail})
+        insert into TBL_USER (USER_NUMBER, USER_NAME, USER_ID, USER_PASSWORD, USER_EMAIL,
+        USER_ADDRESS_NUMBER,USER_ADDRESS1,USER_ADDRESS2,
+        USER_ADDRESS3 , USER_PHONE_NUMBER)
+        values (#{userNumber}, #{userName}, #{userId}, #{userPassword}, #{userEmail},
+        #{userAddressNumber}, #{userAddress1}, #{userAddress2},
+        #{userAddress3} ,#{userPhoneNumber})
     </insert>
 
+
+
+
+<!--    <insert id="insert">-->
+<!--        <selectKey keyProperty="userNumber" order="BEFORE" resultType="long">-->
+<!--            SELECT SEQ_USER.NEXTVAL FROM DUAL-->
+<!--        </selectKey>-->
+<!--        insert into TBL_USER (USER_NUMBER, USER_NAME, USER_PASSWORD, USER_ADDRESS1, USER_EMAIL)-->
+<!--        values (#{userNumber}, #{userName}, #{userPassword}, #{userEmail} ,#{userAddress1})-->
+<!--    </insert>-->
+
 <!--유저 로그인-->
-    <select id="selectUserNumber" resultType="long">
-        SELECT USER_NUMBER
+    <select id="selectById" resultType="userDto">
+        SELECT *
         FROM TBL_USER
         WHERE USER_ID=#{userId}
     </select>
@@ -53,8 +53,6 @@
          SET
             USER_NAME = #{userName},
             USER_ID = #{userId},
-            USER_PASSWORD = #{userPassword},
-            USER_EMAIL = #{userEmail},
             USER_ADDRESS_NUMBER = #{userAddressNumber},
             USER_ADDRESS1 = #{userAddress1},
             USER_ADDRESS2 = #{userAddress2},
