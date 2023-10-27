@@ -27,10 +27,10 @@
 <!--    </insert>-->
 
 <!--유저 로그인-->
-    <select id="selectById" resultType="userDto">
-        SELECT *
-        FROM TBL_USER
-        WHERE USER_ID=#{userId}
+    <select id="selectById" resultType="Long">
+            SELECT USER_NUMBER
+            FROM TBL_USER
+            WHERE USER_ID=#{userId}
     </select>
 
     <!-- 아이디 찾기: 이름과 핸드폰 번호로 아이디 조회 -->

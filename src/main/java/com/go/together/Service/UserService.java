@@ -31,19 +31,20 @@ public class UserService {
 
     //회원 번호 조회하기 (아이디.패스워드)
     @Transactional(readOnly = true)
-    public Long findUserNumber(String userId, String userPassword) {
-        long result = 0;
-        if (userId == null || userPassword == null) {
-            return result;
+    public Long findUserNumber(UserDto userDto) {
+        if (userDto == null) {
+            throw new IllegalArgumentException("아이디 패스워드 누락");
         }
 
-        UserDto user = userMapper.selectById(userId);
-        if(user.getUserPassword().equals(userPassword)) {
-            result = user.getUserNumber(); // 성공
-        }
 
-        return result;
+        return Optional.ofNullable(userMapper.selectById(userDto))
+                .orElseThrow(() -> {
+                    throw new IllegalArgumentException("존재하지 않는 회원입니다.");
+                });
     }
+
+
+
 
     public String searchUserId(String userName, String userPhoneNumber) {
         if (userName == null || userPhoneNumber == null) {

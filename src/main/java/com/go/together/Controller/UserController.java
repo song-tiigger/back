@@ -49,9 +49,10 @@ public class UserController {
 
     //로그인 아이디에 따라 UserNumber 배정됨
     @PostMapping("/login")
-    public Long login(@RequestParam("userId") String userId, @RequestParam("userPassword") String userPassword) {
-        System.out.println("userId   "+userId+" ///// "+userPassword);
-        return userService.findUserNumber(userId, userPassword);
+    public Long login(@RequestBody UserDto userDto) {
+        long result= userService.findUserNumber(userDto);
+        System.out.println("로그인 성공 ! ! ! ! ! ! !");
+                return result;
     }
 
 

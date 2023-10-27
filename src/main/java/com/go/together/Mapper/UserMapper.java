@@ -19,7 +19,7 @@ public interface UserMapper {
     public void update(UserDto userDto);
 
     // 아이디로 회원 가져오기.
-    public UserDto selectById(String userId);
+    public Long selectById(UserDto userDto);
 
     // 유저 번호로 회원정보 가져오기
     public UserDto selectByNo(long userNumber);
