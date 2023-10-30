@@ -50,9 +50,9 @@ public class UserController {
     //로그인 아이디에 따라 UserNumber 배정됨
     @PostMapping("/login")
     public Long login(@RequestBody UserDto userDto) {
-        long result= userService.findUserNumber(userDto);
+        long result = userService.findUserNumber(userDto);
         System.out.println("로그인 성공 ! ! ! ! ! ! !");
-                return result;
+        return result;
     }
 
 
@@ -60,14 +60,37 @@ public class UserController {
     @PostMapping("/modify")
     public void modifyMy(@RequestBody UserDto userDto) {
 
-       userService.modify(userDto);
+        userService.modify(userDto);
 
     }
+
+
+    //아이디 찾기
+    @PostMapping("/searchId")
+    public String searchId(@RequestBody UserDto userDto) {
+        String res =userService.searchUserId(userDto);
+
+        return res;
+    }
+
+
+    //비밀번호찾기
+    @PostMapping("/searchPw")
+    public String searchPw(@RequestBody UserDto userDto){
+        String res=userService.searchUserPassword(userDto);
+
+        return res;
+    }
+
+    //아이디 중복확인
+    @PostMapping("checkId")
+    public int checkId(@RequestBody String userId){
+        int res=userService.idCheck(userId);
+        return res;
+    }
+
+
 }
-
-
-
-
 
 
 

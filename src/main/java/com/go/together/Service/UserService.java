@@ -23,8 +23,6 @@ public class UserService {
     }
 
     /**
-     * @param userId
-     * @param
      * @return
      * @throws IllegalArgumentException 존재하지 않는 회원 id,pw로 조회하는 경우
      */
@@ -44,23 +42,21 @@ public class UserService {
     }
 
 
-
-
-    public String searchUserId(String userName, String userPhoneNumber) {
-        if (userName == null || userPhoneNumber == null) {
+    public String searchUserId(UserDto userDto) {
+        if (userDto == null) {
             throw new IllegalArgumentException("이름 ,핸드폰번호 누락");
         }
-        return Optional.ofNullable(userMapper.findUserId(userName, userPhoneNumber))
+        return Optional.ofNullable(userMapper.findUserId(userDto))
                 .orElseThrow(() -> new IllegalArgumentException("없는 이름 번호"));
     }
 
-    public String searchUserPassword(String userId,String userName, String userPhoneNumber){
-        if(userId ==null || userName ==null ||userPhoneNumber==null){
+    public String searchUserPassword(UserDto userDto) {
+        if (userDto == null) {
             throw new IllegalArgumentException("아이디 , 이름 ,핸드폰번호 누락");
 
         }
-        return Optional.ofNullable(userMapper.findUserPassword(userId, userName, userPhoneNumber))
-                .orElseThrow(()->new IllegalArgumentException("비밀번호를 변경하기위해 일치하는 회원정보가 없습니다."));
+        return Optional.ofNullable(userMapper.findUserPassword(userDto))
+                .orElseThrow(() -> new IllegalArgumentException("비밀번호를 변경하기위해 일치하는 회원정보가 없습니다."));
     }
 
     public void modify(UserDto userDto) {
@@ -70,8 +66,18 @@ public class UserService {
         userMapper.update(userDto);
     }
 
-}
+//아이디 중복확인
+    public int idCheck(String userId) {
+        if (userId == null) {
+            throw new IllegalArgumentException("userId 없음");
+        }
+        int count = userMapper.checkUserId(userId);
 
+        return count;
+
+
+    }
+}
 
 
 

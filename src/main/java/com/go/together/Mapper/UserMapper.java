@@ -10,10 +10,10 @@ public interface UserMapper {
     public int insert(UserDto userDto);
 
     //아이디찾기
-    public String findUserId(@Param("userName")String userName, @Param("userPhoneNumber") String userPhoneNumber);
+    public String findUserId(UserDto userDto);
 
     //비밀번호 찾기
-    public String findUserPassword(@Param("userId")String userId,@Param("userName")String userName, @Param("userPhoneNumber") String userPhoneNumber);
+    public String findUserPassword(UserDto userDto);
 
     //회원 업데이트
     public void update(UserDto userDto);
@@ -21,6 +21,8 @@ public interface UserMapper {
     // 아이디로 회원 가져오기.
     public Long selectById(UserDto userDto);
 
-    // 유저 번호로 회원정보 가져오기
-    public UserDto selectByNo(long userNumber);
+    //유저 아이디 중복확인
+    public int checkUserId(String userId);
+
+
 }
