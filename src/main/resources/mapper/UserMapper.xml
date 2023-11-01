@@ -47,6 +47,18 @@
         WHERE USER_ID = #{userId} AND USER_NAME = #{userName} AND USER_PHONE_NUMBER = #{userPhoneNumber}
     </select>
 
+
+
+    <update id="updatePw" >
+        update tbl_user
+        SET USER_PASSWORD =#{userPassword}
+        where
+    </update>
+
+
+
+
+
 <!--수정 -->
     <update id="update">
         update TBL_USER

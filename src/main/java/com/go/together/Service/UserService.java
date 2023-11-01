@@ -42,12 +42,20 @@ public class UserService {
     }
 
 
+//    public String searchUserId(UserDto userDto) {
+//        if (userDto == null) {
+//            throw new IllegalArgumentException("이름 ,핸드폰번호 누락");
+//        }
+//        return Optional.ofNullable(userMapper.findUserId(userDto))
+//                .orElseThrow(() -> new IllegalArgumentException("없는 이름 "));
+//    }
+
     public String searchUserId(UserDto userDto) {
         if (userDto == null) {
             throw new IllegalArgumentException("이름 ,핸드폰번호 누락");
         }
         return Optional.ofNullable(userMapper.findUserId(userDto))
-                .orElseThrow(() -> new IllegalArgumentException("없는 이름 번호"));
+                .orElseThrow(() -> new IllegalArgumentException("없는 이름 "));
     }
 
     public String searchUserPassword(UserDto userDto) {
