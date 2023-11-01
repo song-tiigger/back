@@ -32,20 +32,18 @@ import java.util.List;
 public class UserController {
     private final UserService userService;
 
-    @GetMapping("/join")
-    public void join() {
-        System.out.println("join@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
-    }
 
 
     //회원가입이 정상적으로 되면 1반환 아니면 0
+
     @PostMapping("/join")
     public int userRegister(@RequestBody UserDto userDto) {
-        userService.register(userDto);
-
-        System.out.println("회원이 완료되었습니다 ! ! ! ! !");
-        return userService.register(userDto);
+        int result = userService.register(userDto);
+        System.out.println("회원가입이 완료되었습니다 ! ! ! ! !");
+        return result;
     }
+
+
 
     //로그인 아이디에 따라 UserNumber 배정됨
     @PostMapping("/login")
@@ -76,16 +74,16 @@ public class UserController {
 
     //비밀번호찾기
     @PostMapping("/searchPw")
-    public String searchPw(@RequestBody UserDto userDto){
-        String res=userService.searchUserPassword(userDto);
+    public int searchPw(@RequestBody UserDto userDto){
+        int res=userService.searchUserPassword(userDto);
 
         return res;
     }
 
     //아이디 중복확인
     @PostMapping("checkId")
-    public int checkId(@RequestBody String userId){
-        int res=userService.idCheck(userId);
+    public int checkId(@RequestBody  UserDto userDto){
+        int res=userService.idCheck(userDto);
         return res;
     }
 

@@ -58,7 +58,7 @@ public class UserService {
                 .orElseThrow(() -> new IllegalArgumentException("없는 이름 "));
     }
 
-    public String searchUserPassword(UserDto userDto) {
+    public int searchUserPassword(UserDto userDto) {
         if (userDto == null) {
             throw new IllegalArgumentException("아이디 , 이름 ,핸드폰번호 누락");
 
@@ -75,15 +75,12 @@ public class UserService {
     }
 
 //아이디 중복확인
-    public int idCheck(String userId) {
-        if (userId == null) {
+    public int idCheck(UserDto userDto) {
+        if (userDto == null) {
             throw new IllegalArgumentException("userId 없음");
         }
-        int count = userMapper.checkUserId(userId);
-
-        return count;
-
-
+        return Optional.ofNullable(userMapper.checkUserId(userDto))
+                .orElseThrow(() -> new IllegalArgumentException("일치하는 회원이름이 없습니다"));
     }
 }
 

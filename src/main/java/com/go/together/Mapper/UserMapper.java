@@ -13,7 +13,7 @@ public interface UserMapper {
     public String findUserId(UserDto userDto);
 
     //비밀번호 찾기
-    public String findUserPassword(UserDto userDto);
+    public int findUserPassword(UserDto userDto);
 
     //회원 업데이트
     public void update(UserDto userDto);
@@ -22,7 +22,7 @@ public interface UserMapper {
     public Long selectById(UserDto userDto);
 
     //유저 아이디 중복확인
-    public int checkUserId(String userId);
+    public int checkUserId(UserDto userDto);
 
 
 }
