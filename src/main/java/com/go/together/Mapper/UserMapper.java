@@ -16,13 +16,14 @@ public interface UserMapper {
     public int findUserPassword(UserDto userDto);
 
     //회원 업데이트
-    public void update(UserDto userDto);
+    public int updatePw(UserDto userDto);
 
     // 아이디로 회원 가져오기.
-    public Long selectById(UserDto userDto);
+    public UserDto selectById(UserDto userDto);
 
     //유저 아이디 중복확인
     public int checkUserId(UserDto userDto);
+
 
 
 }

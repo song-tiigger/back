@@ -1,14 +1,14 @@
-package com.go.together.Dto;
+package com.go.together.Vo;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Component;
 
-@Component
-@Data
 @NoArgsConstructor
+@Data
+@Component
 
-public class ProductDto {
+public class productVo {
     private Long productNumber;
     private Long categoryMinorCode;
     private String productName;
@@ -20,4 +20,11 @@ public class ProductDto {
     private int productQuantity;
     private String productSize;
     private String productRegisterDate;
+
+
+    private  Long userNumber;
+    private String userId;
+    private String fileName;
+    private String fileUploadPath;
+    private String fileUuid;
 }

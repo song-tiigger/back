@@ -4,6 +4,7 @@ import com.go.together.Dto.UserDto;
 import com.go.together.Mapper.UserMapper;
 import com.go.together.Service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.apache.catalina.User;
 import org.springframework.stereotype.Controller;
@@ -47,18 +48,25 @@ public class UserController {
 
     //로그인 아이디에 따라 UserNumber 배정됨
     @PostMapping("/login")
-    public Long login(@RequestBody UserDto userDto) {
-        long result = userService.findUserNumber(userDto);
+    public UserDto login(@RequestBody UserDto userDto, HttpServletRequest req) {
+        UserDto result = userService.findUserNumber(userDto);
+
+        // 세션 가져오기
+        HttpSession session = req.getSession();
+        // 세션에 userNumber 저장하기
+        session.setAttribute("userNumber", result.getUserNumber());
+
         System.out.println("로그인 성공 ! ! ! ! ! ! !");
         return result;
     }
 
 
     //내 정보 수정 할때 쿼리
-    @PostMapping("/modify")
-    public void modifyMy(@RequestBody UserDto userDto) {
+    @PostMapping("/modifyPw")
+    public int modifyMy(@RequestBody UserDto userDto) {
 
-        userService.modify(userDto);
+     int res= userService.modify(userDto);
+     return res;
 
     }
 

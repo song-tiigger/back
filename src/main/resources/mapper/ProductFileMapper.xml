@@ -2,8 +2,8 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
     <mapper namespace="com.go.together.Mapper.FileMapper">
 <insert id="insert">
-    INSERT INTO TBL_FILE(FILE_NUMBER,FILE_NAME,FILE_UPLOAD_PATH,FILE_UUID,BOARD_NUMBER)
-        VALUES (SEQ_FILD.NEXTVAL,#{fileName},#{fileUploadPath},#{fildUuid},#{boardNumber})
+    INSERT INTO TBL_FILE(FILE_NUMBER,FILE_NAME,FILE_UPLOAD_PATH,FILE_UUID,PRODUCT_NUMBER)
+        VALUES (SEQ_FILD.NEXTVAL,#{fileName},#{fileUploadPath},#{fildUuid},#{productNumber})
 </insert>
 
     <delete id="delete">

@@ -27,10 +27,10 @@
 <!--    </insert>-->
 
 <!--유저 로그인-->
-    <select id="selectById" resultType="Long">
-            SELECT USER_NUMBER
+    <select id="selectById" resultType="userDto">
+            SELECT *
             FROM TBL_USER
-            WHERE USER_ID=#{userId}
+            WHERE USER_ID=#{userId} AND USER_PASSWORD=#{userPassword}
     </select>
 
     <!-- 아이디 찾기: 이름과 핸드폰 번호로 아이디 조회 -->
@@ -53,7 +53,7 @@
 <!--    </select>-->
 
     <select id="findUserPassword" resultType="int">
-        SELECT COUNT(*)
+        SELECT USER_NUMBER
         FROM TBL_USER
         WHERE USER_ID = #{userId} AND USER_NAME = #{userName} AND USER_PHONE_NUMBER = #{userPhoneNumber}
     </select>
@@ -61,7 +61,7 @@
     <update id="updatePw" >
         update tbl_user
         SET USER_PASSWORD =#{userPassword}
-        where
+        where USER_ID =#{userId}
     </update>
 
 

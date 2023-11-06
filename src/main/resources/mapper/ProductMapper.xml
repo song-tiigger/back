@@ -32,6 +32,11 @@
 
 
 
+
+    <select id="select" resultType="productVo">
+
+    </select>
+
     <delete id="delete">
         DELETE FROM TBL_BOARD
         WHERE PRODUCT_NUMBER = #{productNumber}
