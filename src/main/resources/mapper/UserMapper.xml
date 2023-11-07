@@ -61,7 +61,7 @@
     <update id="updatePw" >
         update tbl_user
         SET USER_PASSWORD =#{userPassword}
-        where USER_ID =#{userId}
+        where USER_NUMBER=#{userNumber}
     </update>
 
 

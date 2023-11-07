@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 @Slf4j
 @NoArgsConstructor
 public class UserDto{
-    private Long userNumber;
+    private int userNumber;
     private String userName;
     private String userId;
     private String userPassword;

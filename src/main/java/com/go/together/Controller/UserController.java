@@ -62,13 +62,66 @@ public class UserController {
 
 
     //내 정보 수정 할때 쿼리
+
+
+
+//    @PostMapping("/modifyPw")
+//    public UserDto modifyMy(@RequestBody UserDto userDto, HttpSession session) {
+//        // 세션에서 userNumber 가져오기
+//        Long userNumber = (long) session.getAttribute("userNumber");
+//        // userDto 객체에 userNumber 설정하기
+//        userDto.setUserNumber(userNumber);
+//
+//        UserDto res = userService.modify(userDto);
+//        return res;
+//    }
+
+//    @PostMapping("/modifyPw")
+//    public UserDto modifyMy(@RequestBody UserDto userDto, HttpSession session) {
+//        // 세션에서 userNumber 가져오기
+//        Long userNumber = (Long) session.getAttribute("user number");
+//        if (userNumber == null) {
+//            // userNumber가 null인 경우에 대한 처리
+//            throw new IllegalArgumentException("userNumber이 없습니다.");
+//        }
+//
+//        // userDto 객체에 userNumber 설정하기
+//        userDto.setUserNumber(userNumber);
+//
+//        UserDto res = userService.modify(userDto);
+//        return res;
+//    }
+
+
     @PostMapping("/modifyPw")
     public int modifyMy(@RequestBody UserDto userDto) {
+        Integer userNumber = userDto.getUserNumber();
+        System.out.println("-----------------------------------");
+        System.out.println(userDto);
+        if (userNumber == null) {
+            // userNumber가 null인 경우에 대한 처리
+            throw new IllegalArgumentException("userNumber이 없습니다.");
+        }
 
-     int res= userService.modify(userDto);
-     return res;
-
+        int res = userService.modify(userDto);
+        return res;
     }
+//    @PostMapping("/modifyPw")
+//    public UserDto modifyMy(@RequestBody UserDto userDto, HttpServletRequest req) {
+//
+//     UserDto result= userService.modify(userDto);
+//
+//        // 세션 가져오기
+//        HttpSession session = req.getSession();
+//        // 세션에 userNumber 저장하기
+//        session.setAttribute("userNumber", result.getUserNumber());
+//
+//        userDto.setUserNumber(userNumber);
+//
+//
+//     return result;
+//
+//    }
 
 
     //아이디 찾기
