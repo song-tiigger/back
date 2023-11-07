@@ -92,5 +92,15 @@
     </select>
 
 
+
+    <select id="userListAll" resultType="userDto">
+        SELECT *
+        FROM TBL_USER
+        WHERE USER_NUMBER=#{userNumber}
+    </select>
+
+
+
+
 </mapper>
 

@@ -25,5 +25,9 @@ public interface UserMapper {
     public int checkUserId(UserDto userDto);
 
 
+    //유저 정보 리스트로 모두 가져오기 . 마이페이지쪽 정보
+    public UserDto userListAll(UserDto userDto);
+
+
 
 }

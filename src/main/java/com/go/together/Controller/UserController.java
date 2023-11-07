@@ -48,80 +48,33 @@ public class UserController {
 
     //로그인 아이디에 따라 UserNumber 배정됨
     @PostMapping("/login")
-    public UserDto login(@RequestBody UserDto userDto, HttpServletRequest req) {
+    public UserDto login(@RequestBody UserDto userDto) {
         UserDto result = userService.findUserNumber(userDto);
-
-        // 세션 가져오기
-        HttpSession session = req.getSession();
-        // 세션에 userNumber 저장하기
-        session.setAttribute("userNumber", result.getUserNumber());
+//
+//        // 세션 가져오기
+//        HttpSession session = req.getSession();
+//        // 세션에 userNumber 저장하기
+//        session.setAttribute("userNumber", result.getUserNumber());
 
         System.out.println("로그인 성공 ! ! ! ! ! ! !");
         return result;
     }
 
 
-    //내 정보 수정 할때 쿼리
 
-
-
-//    @PostMapping("/modifyPw")
-//    public UserDto modifyMy(@RequestBody UserDto userDto, HttpSession session) {
-//        // 세션에서 userNumber 가져오기
-//        Long userNumber = (long) session.getAttribute("userNumber");
-//        // userDto 객체에 userNumber 설정하기
-//        userDto.setUserNumber(userNumber);
-//
-//        UserDto res = userService.modify(userDto);
-//        return res;
-//    }
-
-//    @PostMapping("/modifyPw")
-//    public UserDto modifyMy(@RequestBody UserDto userDto, HttpSession session) {
-//        // 세션에서 userNumber 가져오기
-//        Long userNumber = (Long) session.getAttribute("user number");
-//        if (userNumber == null) {
-//            // userNumber가 null인 경우에 대한 처리
-//            throw new IllegalArgumentException("userNumber이 없습니다.");
-//        }
-//
-//        // userDto 객체에 userNumber 설정하기
-//        userDto.setUserNumber(userNumber);
-//
-//        UserDto res = userService.modify(userDto);
-//        return res;
-//    }
-
-
+// 비밀번호 수정 쿼리
     @PostMapping("/modifyPw")
     public int modifyMy(@RequestBody UserDto userDto) {
         Integer userNumber = userDto.getUserNumber();
-        System.out.println("-----------------------------------");
-        System.out.println(userDto);
         if (userNumber == null) {
             // userNumber가 null인 경우에 대한 처리
             throw new IllegalArgumentException("userNumber이 없습니다.");
         }
-
         int res = userService.modify(userDto);
+        System.out.println("---------------------------!!!!!!!!!!!!");
+        System.out.println(userDto);
         return res;
     }
-//    @PostMapping("/modifyPw")
-//    public UserDto modifyMy(@RequestBody UserDto userDto, HttpServletRequest req) {
-//
-//     UserDto result= userService.modify(userDto);
-//
-//        // 세션 가져오기
-//        HttpSession session = req.getSession();
-//        // 세션에 userNumber 저장하기
-//        session.setAttribute("userNumber", result.getUserNumber());
-//
-//        userDto.setUserNumber(userNumber);
-//
-//
-//     return result;
-//
-//    }
 
 
     //아이디 찾기
@@ -142,14 +95,40 @@ public class UserController {
     }
 
     //아이디 중복확인
-    @PostMapping("checkId")
+    @PostMapping("/checkId")
     public int checkId(@RequestBody  UserDto userDto){
         int res=userService.idCheck(userDto);
         return res;
     }
 
 
+
+
+//    회원정보 가져오기
+    @PostMapping("/myPage")
+    public UserDto myPage(@RequestBody UserDto userDto){
+
+        Integer userNumber = userDto.getUserNumber();
+        System.out.println("-----------------------------------");
+        System.out.println(userDto);
+        if (userNumber == null) {
+            // userNumber가 null인 경우에 대한 처리
+            throw new IllegalArgumentException("userNumber이 없습니다.");
+        }
+
+        UserDto res=userService.getUserList(userDto);
+        return res;
+    }
+
+
+
+
 }
+
+
+
+
+
 
 
 
