@@ -11,7 +11,7 @@
         WHERE FILE_NUMBER = #{fileNumber}
     </delete>
 
-    <select id="selectList" resultType="fileDto">
+    <select id="selectList" resultType="fileVo">
     SELECT FILE_NUMBER, FILE_NAME, FILE_UPLOAD_PATH,FILE_UUID,PRODUCT_NUMBER
         FROM TBL_FILE
         WHERE PRODUCT_NUMBER=#{productNumber}

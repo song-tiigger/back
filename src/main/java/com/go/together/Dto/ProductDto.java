@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 @NoArgsConstructor
 
 public class ProductDto {
+    private long productBoardNumber;
     private Long productNumber;
     private Long categoryMinorCode;
     private String productName;

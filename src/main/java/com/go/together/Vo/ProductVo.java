@@ -8,7 +8,8 @@ import org.springframework.stereotype.Component;
 @Data
 @Component
 
-public class productVo {
+public class ProductVo {
+    private Long productBoardNubmer;
     private Long productNumber;
     private Long categoryMinorCode;
     private String productName;
@@ -20,8 +21,6 @@ public class productVo {
     private int productQuantity;
     private String productSize;
     private String productRegisterDate;
-
-
     private  Long userNumber;
     private String userId;
     private String fileName;

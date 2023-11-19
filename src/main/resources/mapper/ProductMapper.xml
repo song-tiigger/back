@@ -3,12 +3,44 @@
     <mapper namespace="com.go.together.Mapper.ProductMapper">
 
 
+<!--    <insert id="insertProduct">-->
+<!--        <selectKey keyProperty="productNumber" order="BEFORE" resultType="long">-->
+<!--            SELECT SEQ_PRODUCT.NEXTVAL FROM DUAL-->
+<!--        </selectKey>-->
+<!--        INSERT INTO TBL_PRODUCT-->
+<!--        (-->
+<!--        PRODUCT_NUMBER,-->
+<!--        CATEGORY_MINOR_CODE,-->
+<!--        PRODUCT_NAME,-->
+<!--        PRODUCT_PRICE,-->
+<!--        DISCOUNT_RATE,-->
+<!--        PRODUCT_EXPLANATION,-->
+<!--        PRODUCT_QUANTITY,-->
+<!--        PRODUCT_SIZE-->
+<!--        )-->
+<!--        VALUES-->
+<!--        ( #{productNumber},-->
+<!--        #{categoryMinorCode},-->
+<!--        #{productName},-->
+<!--        #{productPrice},-->
+<!--        #{discountRate},-->
+<!--        #{productExplanation},-->
+<!--        #{productQuantity},-->
+<!--        #{productSize}-->
+<!--        )-->
+<!--    </insert>-->
+
+
+
     <insert id="insertProduct">
         <selectKey keyProperty="productNumber" order="BEFORE" resultType="long">
             SELECT SEQ_PRODUCT.NEXTVAL FROM DUAL
         </selectKey>
-        INSERT INTO TBL_PRODUCT
-        (
+        <selectKey keyProperty="productBoardNumber" order="BEFORE" resultType="long">
+            SELECT SEQ_PRODUCT_BOARD.NEXTVAL FROM DUAL
+        </selectKey>
+        INSERT INTO TBL_PRODUCT (
+        PRODUCT_BOARD_NUMBER,
         PRODUCT_NUMBER,
         CATEGORY_MINOR_CODE,
         PRODUCT_NAME,
@@ -16,29 +48,43 @@
         DISCOUNT_RATE,
         PRODUCT_EXPLANATION,
         PRODUCT_QUANTITY,
-        PRODUCT_SIZE
+        PRODUCT_SIZE,
+        PRODUCT_REGISTER_DATE,
+        USER_ID
         )
-        VALUES
-        ( #{productNumber},
+        VALUES (
+        #{productBoardNumber}, -- PRODUCT_BOARD_NUMBER에 SEQ_PRODUCT_BOARD.NEXTVAL로 값 할당
+        #{productNumber},
         #{categoryMinorCode},
         #{productName},
         #{productPrice},
         #{discountRate},
         #{productExplanation},
         #{productQuantity},
-        #{productSize}
+        #{productSize},
+        SYSDATE,
+        #{userId}
         )
     </insert>
 
 
 
-
-    <select id="select" resultType="productVo">
-
+    <select id="selectProduct" resultType="productDto">
+        SELECT *
+        FROM TBL_PRODUCT
+        WHERE PRODUCT_BOARD_NUMBER = #{productBoardNumber}
     </select>
 
+
+    <select id="selectAllProduct" resultType="productVo">
+        SELECT *
+        FROM TBL_PRODUCT
+        WHERE userId=#{admin}
+    </select>
+
+
     <delete id="delete">
-        DELETE FROM TBL_BOARD
+        DELETE FROM TBL_PRODUCT
         WHERE PRODUCT_NUMBER = #{productNumber}
     </delete>
 

@@ -87,14 +87,13 @@ public class UserService {
 
 
 //    유저 모든 정보 리스트로 가져오기
-    public UserDto getUserList(UserDto userDto){
-        if (userDto ==null){
-            throw new IllegalArgumentException("유저 넘버 없음");
-        }
-        return Optional.ofNullable(userMapper.userListAll(userDto))
-                .orElseThrow(() -> new IllegalArgumentException("일치하는 회원이름이 없습니다"));
+public UserDto getUserList(UserDto userDto){
+    if (userDto ==null){
+        throw new IllegalArgumentException("유저 넘버 없음");
     }
-
+    return Optional.ofNullable(userMapper.userListAll(userDto))
+            .orElseThrow(() -> new IllegalArgumentException("회원번호가 없습니다"));
+}
 
 }
 
