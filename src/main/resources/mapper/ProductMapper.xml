@@ -1,36 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-    <mapper namespace="com.go.together.Mapper.ProductMapper">
-
-
-<!--    <insert id="insertProduct">-->
-<!--        <selectKey keyProperty="productNumber" order="BEFORE" resultType="long">-->
-<!--            SELECT SEQ_PRODUCT.NEXTVAL FROM DUAL-->
-<!--        </selectKey>-->
-<!--        INSERT INTO TBL_PRODUCT-->
-<!--        (-->
-<!--        PRODUCT_NUMBER,-->
-<!--        CATEGORY_MINOR_CODE,-->
-<!--        PRODUCT_NAME,-->
-<!--        PRODUCT_PRICE,-->
-<!--        DISCOUNT_RATE,-->
-<!--        PRODUCT_EXPLANATION,-->
-<!--        PRODUCT_QUANTITY,-->
-<!--        PRODUCT_SIZE-->
-<!--        )-->
-<!--        VALUES-->
-<!--        ( #{productNumber},-->
-<!--        #{categoryMinorCode},-->
-<!--        #{productName},-->
-<!--        #{productPrice},-->
-<!--        #{discountRate},-->
-<!--        #{productExplanation},-->
-<!--        #{productQuantity},-->
-<!--        #{productSize}-->
-<!--        )-->
-<!--    </insert>-->
-
-
+<mapper namespace="com.go.together.Mapper.ProductMapper">
 
     <insert id="insertProduct">
         <selectKey keyProperty="productNumber" order="BEFORE" resultType="long">
@@ -40,6 +10,7 @@
         PRODUCT_NUMBER,
         CATEGORY_MINOR_CODE,
         PRODUCT_NAME,
+        PRODUCT_COLOR,
         PRODUCT_PRICE,
         DISCOUNT_RATE,
         PRODUCT_EXPLANATION,
@@ -52,6 +23,7 @@
         #{productNumber},
         #{categoryMinorCode},
         #{productName},
+        #{productColor},
         #{productPrice},
         #{discountRate},
         #{productExplanation},
@@ -64,14 +36,14 @@
 
 
 
-    <select id="selectProduct" resultType="productVo">
+    <select id="selectProduct" resultType="productDto">
         SELECT *
         FROM TBL_PRODUCT
         WHERE PRODUCT_NUMBER = #{productNumber}
     </select>
 
 
-    <select id="selectAllProduct" resultType="productVo">
+    <select id="selectAllProduct" resultType="productDto">
         SELECT *
         FROM TBL_PRODUCT
         WHERE userId=#{admin}
@@ -83,9 +55,10 @@
         WHERE PRODUCT_NUMBER = #{productNumber}
     </delete>
 
-    <select id="selectTotal" resultType="_int">
+    <select id="selectTotal" resultType="int">
         SELECT COUNT(PRODUCT_NUMBER) FROM TBL_PRODUCT
     </select>
-    
+
 </mapper>
+
 

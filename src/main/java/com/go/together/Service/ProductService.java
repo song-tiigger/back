@@ -1,10 +1,10 @@
+
 package com.go.together.Service;
 
 import com.go.together.Dto.ProductDto;
 import com.go.together.Dto.UserDto;
 import com.go.together.Mapper.ProductMapper;
 import com.go.together.Mapper.UserMapper;
-import com.go.together.Vo.ProductVo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,30 +17,27 @@ import java.util.Optional;
 public class ProductService {
     private final ProductMapper productMapper;
 
-   public int registerProduct(ProductDto productDto){
-       if(productDto == null){
-           throw new IllegalArgumentException("정보가 없습니다");
-       }
-      return productMapper.insertProduct(productDto);
-   }
+    public int registerProduct(ProductDto productDto){
+        if(productDto == null){
+            throw new IllegalArgumentException("정보가 없습니다");
+        }
+        return productMapper.insertProduct(productDto);
+    }
 
 
 
-   public ProductDto findOneProduct(Long productNumber){
-       if(productNumber == null){
-           throw new IllegalArgumentException("상품게시글 번호가 없습니다");
-       }
-       return productMapper.selectProduct(productNumber);
-   }
+    public ProductDto findOneProduct(Long productNumber){
+        if(productNumber == null){
+            throw new IllegalArgumentException("상품게시글 번호가 없습니다");
+        }
+        return productMapper.selectProduct(productNumber);
+    }
 
 
 
-   public List<ProductVo> findAllProduct(ProductVo productVo){
-       return productMapper.selectAllProduct();
-   }
+    public List<ProductDto> findAllProduct(ProductDto productDto){
+        return productMapper.selectAllProduct();
+    }
 
 
 }
-
-
-

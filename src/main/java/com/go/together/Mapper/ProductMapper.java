@@ -1,7 +1,6 @@
 package com.go.together.Mapper;
 
 import com.go.together.Dto.ProductDto;
-import com.go.together.Vo.ProductVo;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -12,6 +11,6 @@ public interface ProductMapper {
 
     public ProductDto selectProduct(Long productNumber);
 
-    public List<ProductVo> selectAllProduct();
+    public List<ProductDto> selectAllProduct();
 
 }
