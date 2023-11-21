@@ -5,8 +5,6 @@
     <typeAliases>
         <typeAlias type="com.go.together.Dto.UserDto" alias="userDto"/>
         <typeAlias type="com.go.together.Dto.ProductDto" alias="productDto"/>
-        <typeAlias type="com.go.together.Dto.FileDto" alias="fileDto"/>
-        <typeAlias type="com.go.together.Vo.ProductVo" alias="productVo"/>
-
+        <typeAlias type="com.go.together.Dto.ProductDto" alias="productDto"/>
     </typeAliases>
 </configuration>

@@ -4,6 +4,7 @@ import com.go.together.Dto.UserDto;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+
 @Mapper
 public interface UserMapper {
     //유저 회원가입

@@ -2,14 +2,15 @@ package com.go.together.Dto;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 @Component
 @Data
+@Slf4j
 @NoArgsConstructor
-
 public class ProductDto {
-    private long productBoardNumber;
     private Long productNumber;
     private Long categoryMinorCode;
     private String productName;
@@ -21,4 +22,5 @@ public class ProductDto {
     private int productQuantity;
     private String productSize;
     private String productRegisterDate;
+    private String userId;
 }
