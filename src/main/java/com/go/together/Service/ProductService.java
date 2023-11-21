@@ -26,11 +26,11 @@ public class ProductService {
 
 
 
-   public ProductDto findOneProduct(Long productBoardNumber){
-       if(productBoardNumber == null){
+   public ProductDto findOneProduct(Long productNumber){
+       if(productNumber == null){
            throw new IllegalArgumentException("상품게시글 번호가 없습니다");
        }
-       return productMapper.selectProduct(productBoardNumber);
+       return productMapper.selectProduct(productNumber);
    }
 
 

@@ -11,5 +11,8 @@ public interface FileMapper {
 
     public void delete(Long fileNumber);
 
-    public List<FileDto> selectList(Long fileNumber);
+    public List<FileDto> selectList(Long productNumber);
+
+    public List<FileDto> selectOldList();
+
 }

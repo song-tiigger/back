@@ -9,7 +9,6 @@ import org.springframework.stereotype.Component;
 @Component
 
 public class ProductVo {
-    private Long productBoardNubmer;
     private Long productNumber;
     private Long categoryMinorCode;
     private String productName;

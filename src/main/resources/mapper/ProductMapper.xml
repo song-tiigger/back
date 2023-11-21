@@ -36,11 +36,7 @@
         <selectKey keyProperty="productNumber" order="BEFORE" resultType="long">
             SELECT SEQ_PRODUCT.NEXTVAL FROM DUAL
         </selectKey>
-        <selectKey keyProperty="productBoardNumber" order="BEFORE" resultType="long">
-            SELECT SEQ_PRODUCT_BOARD.NEXTVAL FROM DUAL
-        </selectKey>
         INSERT INTO TBL_PRODUCT (
-        PRODUCT_BOARD_NUMBER,
         PRODUCT_NUMBER,
         CATEGORY_MINOR_CODE,
         PRODUCT_NAME,
@@ -53,7 +49,6 @@
         USER_ID
         )
         VALUES (
-        #{productBoardNumber}, -- PRODUCT_BOARD_NUMBER에 SEQ_PRODUCT_BOARD.NEXTVAL로 값 할당
         #{productNumber},
         #{categoryMinorCode},
         #{productName},
@@ -69,10 +64,10 @@
 
 
 
-    <select id="selectProduct" resultType="productDto">
+    <select id="selectProduct" resultType="productVo">
         SELECT *
         FROM TBL_PRODUCT
-        WHERE PRODUCT_BOARD_NUMBER = #{productBoardNumber}
+        WHERE PRODUCT_NUMBER = #{productNumber}
     </select>
 
 

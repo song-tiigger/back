@@ -10,7 +10,7 @@ import java.util.List;
 public interface ProductMapper {
     public int insertProduct(ProductDto productDto);
 
-    public ProductDto selectProduct(Long productBoardNumber);
+    public ProductDto selectProduct(Long productNumber);
 
     public List<ProductVo> selectAllProduct();
 

@@ -3,12 +3,12 @@
     <mapper namespace="com.go.together.Mapper.FileMapper">
 <insert id="insert">
     INSERT INTO TBL_FILE(FILE_NUMBER,FILE_NAME,FILE_UPLOAD_PATH,FILE_UUID,PRODUCT_NUMBER)
-        VALUES (SEQ_FILD.NEXTVAL,#{fileName},#{fileUploadPath},#{fildUuid},#{productNumber})
+        VALUES (SEQ_FILE.NEXTVAL,#{fileName},#{fileUploadPath},#{fildUuid},#{productNumber})
 </insert>
 
     <delete id="delete">
         DELETE FROM TBL_FILE
-        WHERE FILE_NUMBER = #{fileNumber}
+        WHERE PRODUCT_NUMBER = #{productNumber}
     </delete>
 
     <select id="selectList" resultType="fileVo">
@@ -17,6 +17,10 @@
         WHERE PRODUCT_NUMBER=#{productNumber}
     </select>
 
-
+    <select id="selectOldList" resultType="fileDto">
+        SELECT FILE_NUMBER,FILE_NAME,FILE_UPLOAD_PATH, FILE_UUID,PRODUCT_NUMBER
+        FROM TBL_FILE
+        WHERE FILE_UPLOAD_PATH= TO_CHAR(CURRENT_DATE -1 , 'YYYY/MM/DD')
+    </select>
 </mapper>
 

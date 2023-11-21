@@ -13,5 +13,4 @@ public class FileDto {
     private String fileUploadPath;
     private String fileUuid;
     private Long productNumber;
-    private Long productBoardNumber;
 }
