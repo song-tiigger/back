@@ -1,37 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.go.together.Mapper.ProductMapper">
-
     <insert id="insertProduct">
         <selectKey keyProperty="productNumber" order="BEFORE" resultType="long">
             SELECT SEQ_PRODUCT.NEXTVAL FROM DUAL
         </selectKey>
-        INSERT INTO TBL_PRODUCT (
-        PRODUCT_NUMBER,
-        CATEGORY_MINOR_CODE,
-        PRODUCT_NAME,
-        PRODUCT_COLOR,
-        PRODUCT_PRICE,
-        DISCOUNT_RATE,
-        PRODUCT_EXPLANATION,
-        PRODUCT_QUANTITY,
-        PRODUCT_SIZE,
-        PRODUCT_REGISTER_DATE,
-        USER_ID
-        )
-        VALUES (
-        #{productNumber},
-        #{categoryMinorCode},
-        #{productName},
-        #{productColor},
-        #{productPrice},
-        #{discountRate},
-        #{productExplanation},
-        #{productQuantity},
-        #{productSize},
-        SYSDATE,
-        #{userId}
-        )
+        INSERT INTO TBL_PRODUCT (PRODUCT_NUMBER,CATEGORY_MAJOR_CODE, CATEGORY_MINOR_CODE, PRODUCT_NAME, PRODUCT_COLOR, PRODUCT_PRICE, DISCOUNT_RATE,
+                                 PRODUCT_EXPLANATION, PRODUCT_QUANTITY, PRODUCT_SIZE)
+        VALUES (#{productNumber}, #{categoryMajorCode},#{categoryMinorCode}, #{productName}, #{productColor}, #{productPrice}, #{discountRate},
+          #{productExplanation}, #{productQuantity}, #{productSize})
     </insert>
 
 

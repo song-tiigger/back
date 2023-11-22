@@ -19,9 +19,10 @@ public class ProductController {
     private final ProductService productService;
 
     @PostMapping("/registerProduct")
-    public int registerFile(@RequestBody ProductDto productDto){
+    public int registerProduct(@RequestBody ProductDto productDto){
+
         int result = productService.registerProduct(productDto);
-        System.out.println("상품등록완료!");
+        System.out.println(productDto+"상품 입력 값 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
         return result;
     }
 
