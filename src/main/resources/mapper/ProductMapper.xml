@@ -23,7 +23,6 @@
     <select id="selectAllProduct" resultType="productDto">
         SELECT *
         FROM TBL_PRODUCT
-        WHERE userId=#{admin}
     </select>
 
 

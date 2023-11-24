@@ -2,12 +2,16 @@
 package com.go.together.Controller;
 
 import com.go.together.Dto.ProductDto;
+import com.go.together.Service.FileService;
 import com.go.together.Service.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -17,12 +21,33 @@ import java.util.List;
 
 public class ProductController {
     private final ProductService productService;
+    private final FileService fileService;
 
     @PostMapping("/registerProduct")
     public int registerProduct(@RequestBody ProductDto productDto){
 
+        //        String userId = productDto.getUserId();
+//        if (!"admin".equals(userId)) {
+//            throw new IllegalArgumentException("admin 아이디가 없습니다");
+//        }
+
+
+//        ,  @RequestParam("productFile") List<MultipartFile> files
+
+//        String userId = productDto.getUserId();
+//        if (!"admin".equals(userId)) {
+//            throw new IllegalArgumentException("admin 아이디가 없습니다");
+//        }
         int result = productService.registerProduct(productDto);
         System.out.println(productDto+"상품 입력 값 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+
+//        if(files != null){
+//            try {
+//                fileService.registerAndSaveFiles(files, productDto.getProductNumber());
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//        }
         return result;
     }
 

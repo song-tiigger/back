@@ -21,6 +21,7 @@ public class ProductService {
         if(productDto == null){
             throw new IllegalArgumentException("정보가 없습니다");
         }
+        System.out.println("상품 등록완료!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
         return productMapper.insertProduct(productDto);
     }
 
@@ -36,6 +37,9 @@ public class ProductService {
 
 
     public List<ProductDto> findAllProduct(ProductDto productDto){
+        if(productDto == null){
+            throw new IllegalArgumentException("정보가 없습니다");
+        }
         return productMapper.selectAllProduct();
     }
 
