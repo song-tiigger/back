@@ -13,4 +13,6 @@ public interface ProductMapper {
 
     public List<ProductDto> selectAllProduct();
 
+    public int delete(Long productNumber);
+
 }

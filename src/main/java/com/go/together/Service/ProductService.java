@@ -44,4 +44,17 @@ public class ProductService {
     }
 
 
+
+
+//    상품 삭제
+
+    public int remove(Long productNumber){
+        if(productNumber ==null){
+            throw new IllegalArgumentException("상품게시글 번호가가 없습니다");
+        }
+        return productMapper.delete(productNumber);
+    }
+
+
+
 }
