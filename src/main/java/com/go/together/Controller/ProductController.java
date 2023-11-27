@@ -21,7 +21,7 @@ public class ProductController {
     private final FileService fileService;
 
     @PostMapping("/registerProduct")
-    public int registerProduct(@RequestBody ProductDto productDto, @RequestParam("productFile") List<MultipartFile> files) {
+    public int registerProduct(ProductDto productDto, @RequestPart("productFile") List<MultipartFile> files) {
 
         //        String userId = productDto.getUserId();
 //        if (!"admin".equals(userId)) {
@@ -53,8 +53,6 @@ public class ProductController {
         // productService를 호출하여 필요한 비즈니스 로직을 수행하고,
         // 결과를 List<ProductVo> 형태로 반환합니다.
         List<ProductDto> productVoList = productService.findAllProduct(productDto);
-        System.out.println(productDto + "리스트값이 잘 들어오는지 !!!!!!!!!!!!!!");
-
         return productVoList;
     }
 

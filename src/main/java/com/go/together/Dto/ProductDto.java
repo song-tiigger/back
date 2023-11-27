@@ -24,6 +24,6 @@ public class ProductDto {
     private String productExplanation;
     private int productQuantity;
     private String productSize;
-    private Date productRegisterDate;
+   private Date productRegisterDate;
     private String userId;
 }

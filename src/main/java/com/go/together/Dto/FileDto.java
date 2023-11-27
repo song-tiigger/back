@@ -2,10 +2,12 @@ package com.go.together.Dto;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
-@Data
 @Component
+@Data
+@Slf4j
 @NoArgsConstructor
 public class FileDto {
     private Long FileNumber;
@@ -13,4 +15,5 @@ public class FileDto {
     private String fileUploadPath;
     private String fileUuid;
     private Long productNumber;
+    ;
 }

@@ -6,9 +6,9 @@
             SELECT SEQ_PRODUCT.NEXTVAL FROM DUAL
         </selectKey>
         INSERT INTO TBL_PRODUCT (PRODUCT_NUMBER,CATEGORY_MAJOR_CODE, CATEGORY_MINOR_CODE, PRODUCT_NAME, PRODUCT_COLOR, PRODUCT_PRICE, DISCOUNT_RATE,
-                                 PRODUCT_EXPLANATION, PRODUCT_QUANTITY, PRODUCT_SIZE)
+                                 PRODUCT_EXPLANATION, PRODUCT_QUANTITY, PRODUCT_SIZE,PRODUCT_REGISTER_DATE)
         VALUES (#{productNumber}, #{categoryMajorCode},#{categoryMinorCode}, #{productName}, #{productColor}, #{productPrice}, #{discountRate},
-          #{productExplanation}, #{productQuantity}, #{productSize})
+          #{productExplanation}, #{productQuantity}, #{productSize},SYSDATE)
     </insert>
 
 
@@ -34,6 +34,17 @@
     <select id="selectTotal" resultType="int">
         SELECT COUNT(PRODUCT_NUMBER) FROM TBL_PRODUCT
     </select>
+
+
+
+
+
+
+
+
+
+
+
 
 </mapper>
 

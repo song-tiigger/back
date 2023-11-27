@@ -5,7 +5,7 @@
 
     <insert id="insert">
         INSERT INTO TBL_FILE(FILE_NUMBER, FILE_NAME, FILE_UPLOAD_PATH, FILE_UUID, PRODUCT_NUMBER)
-        VALUES (SEQ_FILE.NEXTVAL, #{fileName}, #{fileUploadPath}, #{fileUuid}, #{product_number})
+        VALUES (SEQ_FILE.NEXTVAL, #{fileName}, #{fileUploadPath}, #{fileUuid}, #{productNumber})
     </insert>
 
     <delete id="delete">
