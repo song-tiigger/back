@@ -8,7 +8,9 @@ import com.go.together.Mapper.UserMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
@@ -16,6 +18,9 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class ProductService {
     private final ProductMapper productMapper;
+    private final FileService fileService;
+
+
 
     public int registerProduct(ProductDto productDto){
         if(productDto == null){
@@ -55,6 +60,23 @@ public class ProductService {
         return productMapper.delete(productNumber);
     }
 
+// 상품 수정
 
+    public void modify(ProductDto productDto){
+        if(productDto == null){
+            throw new IllegalArgumentException("게시물 수정 정보가 없습니다.");
+        }
+        productMapper.update(productDto);
+    }
+
+
+public void modify (ProductDto productDto, List<MultipartFile> files) throws IOException {
+    if(productDto == null || files ==null){
+        throw new IllegalArgumentException("게시글 수정 매개변수 null 체크");
+    }
+    fileService.remove(productDto.getProductNumber());
+    fileService.registerAndSaveFiles(files, productDto.getProductNumber());
+    productMapper.update(productDto);
+}
 
 }

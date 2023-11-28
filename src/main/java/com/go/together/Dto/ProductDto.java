@@ -14,6 +14,7 @@ import java.util.Date;
 @NoArgsConstructor
 public class ProductDto {
     private Long productNumber;
+    private int userNumber;
     private Long categoryMajorCode;
     private Long categoryMinorCode;
     private String productName;
@@ -22,8 +23,10 @@ public class ProductDto {
     private Double discountRate; // 추가: 할인율
 //    private Double discountPrice; // 추가: 할인가
     private String productExplanation;
+    private String productExplanation1;
+    private String productExplanation2;
     private int productQuantity;
     private String productSize;
-   private Date productRegisterDate;
+    private Date productRegisterDate;
     private String userId;
 }

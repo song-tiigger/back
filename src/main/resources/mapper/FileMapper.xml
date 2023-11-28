@@ -25,6 +25,11 @@
         WHERE FILE_UPLOAD_PATH= TO_CHAR(CURRENT_DATE -1 , 'YYYY/MM/DD')
     </select>
 
+
+
+
+
+
 </mapper>
 
 
