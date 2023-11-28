@@ -3,6 +3,7 @@ package com.go.together.Service;
 
 import com.go.together.Dto.ProductDto;
 import com.go.together.Dto.UserDto;
+import com.go.together.Mapper.FileMapper;
 import com.go.together.Mapper.ProductMapper;
 import com.go.together.Mapper.UserMapper;
 import lombok.RequiredArgsConstructor;
@@ -19,7 +20,7 @@ import java.util.Optional;
 public class ProductService {
     private final ProductMapper productMapper;
     private final FileService fileService;
-
+    private final FileMapper fileMapper;
 
 
     public int registerProduct(ProductDto productDto){
@@ -57,6 +58,8 @@ public class ProductService {
         if(productNumber ==null){
             throw new IllegalArgumentException("상품게시글 번호가가 없습니다");
         }
+        fileMapper.delete(productNumber);
+
         return productMapper.delete(productNumber);
     }
 
@@ -66,7 +69,7 @@ public class ProductService {
         if(productDto == null){
             throw new IllegalArgumentException("게시물 수정 정보가 없습니다.");
         }
-        productMapper.update(productDto);
+        productMapper.updateProduct(productDto);
     }
 
 
@@ -76,7 +79,7 @@ public void modify (ProductDto productDto, List<MultipartFile> files) throws IOE
     }
     fileService.remove(productDto.getProductNumber());
     fileService.registerAndSaveFiles(files, productDto.getProductNumber());
-    productMapper.update(productDto);
+    productMapper.updateProduct(productDto);
 }
 
 }

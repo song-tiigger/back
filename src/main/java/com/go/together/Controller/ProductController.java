@@ -65,8 +65,8 @@ public class ProductController {
     @PostMapping("productDelete")
     public int productDelete(@RequestParam Long productNumber) {
         int result = productService.remove(productNumber);
-        if (result != 1) {
-            throw new IllegalArgumentException("오류발생 !");
+        if (result !=1) {
+            throw new IllegalArgumentException("productNumber의 해당하는 번호가 없음 !");
         }
         return result;
     }
@@ -74,8 +74,10 @@ public class ProductController {
 
     @PostMapping("productUpdate")
     public int productUpdate(ProductDto productDto, @RequestPart("productFile") List<MultipartFile> files) {
-
-
+        Long productNumber=productDto.getProductNumber();
+        if (productNumber == null) {
+            throw new IllegalArgumentException("유저번호가 x");
+        }
         try {
             productService.modify(productDto , files);
         } catch (IOException e) {

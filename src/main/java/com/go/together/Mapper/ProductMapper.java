@@ -15,7 +15,7 @@ public interface ProductMapper {
 
     public int delete(Long productNumber);
 
-    public void update(ProductDto productDto);
+    public void updateProduct(ProductDto productDto);
 
 
 }

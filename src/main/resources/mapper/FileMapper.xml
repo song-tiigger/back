@@ -19,6 +19,8 @@
         WHERE PRODUCT_NUMBER = #{product_number}
     </select>
 
+
+
     <select id="selectOldList" resultType="fileDto">
         SELECT FILE_NUMBER,FILE_NAME,FILE_UPLOAD_PATH, FILE_UUID,PRODUCT_NUMBER
         FROM TBL_FILE
