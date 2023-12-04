@@ -6,6 +6,7 @@ import com.go.together.Dto.UserDto;
 import com.go.together.Mapper.FileMapper;
 import com.go.together.Mapper.ProductMapper;
 import com.go.together.Mapper.UserMapper;
+import com.go.together.Vo.ProductVo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -33,7 +34,7 @@ public class ProductService {
 
 
 
-    public ProductDto findOneProduct(Long productNumber){
+    public ProductVo findOneProduct(Long productNumber){
         if(productNumber == null){
             throw new IllegalArgumentException("상품게시글 번호가 없습니다");
         }
@@ -42,8 +43,8 @@ public class ProductService {
 
 
 
-    public List<ProductDto> findAllProduct(ProductDto productDto){
-        if(productDto == null){
+    public List<ProductVo> findAllProduct(ProductVo productVo){
+        if(productVo == null){
             throw new IllegalArgumentException("정보가 없습니다");
         }
         return productMapper.selectAllProduct();
@@ -59,7 +60,6 @@ public class ProductService {
             throw new IllegalArgumentException("상품게시글 번호가가 없습니다");
         }
         fileMapper.delete(productNumber);
-
         return productMapper.delete(productNumber);
     }
 

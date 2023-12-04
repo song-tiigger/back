@@ -4,11 +4,13 @@ package com.go.together.Controller;
 import com.go.together.Dto.ProductDto;
 import com.go.together.Service.FileService;
 import com.go.together.Service.ProductService;
+import com.go.together.Vo.ProductVo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -43,8 +45,8 @@ public class ProductController {
 
 
     @PostMapping("/fileList")
-    public List<ProductDto> fileList(@RequestBody ProductDto productDto) {
-        Integer userNumber = productDto.getUserNumber();
+    public List<ProductVo> fileList(@RequestBody ProductVo productVo) {
+        Integer userNumber = productVo.getUserNumber();
         if (userNumber == null) {
             throw new IllegalArgumentException("유저아이디가 없습니다");
         }
@@ -58,21 +60,47 @@ public class ProductController {
         // productService를 호출하여 필요한 비즈니스 로직을 수행하고,
         // 결과를 List<ProductVo> 형태로 반환합니다.
         System.out.println("유저번호 !!!!!!!" + userNumber);
-        List<ProductDto> productVoList = productService.findAllProduct(productDto);
+        List<ProductVo> productVoList = productService.findAllProduct(productVo);
         return productVoList;
     }
 
-    @PostMapping("productDelete")
+
+    @PostMapping("/productView")
+    public ProductVo productView(@RequestBody ProductVo productVo){
+        Long productNumber = productVo.getProductNumber();
+        System.out.println(productNumber + "상품 번호확인 !!!");
+        ProductVo result =productService.findOneProduct(productNumber);
+
+        return result;
+
+    }
+
+
+
+    @GetMapping("/productDelete")
     public int productDelete(@RequestParam Long productNumber) {
+
+
         int result = productService.remove(productNumber);
-        if (result !=1) {
-            throw new IllegalArgumentException("productNumber의 해당하는 번호가 없음 !");
-        }
+        System.out.println(result + "1이 나오면 성공");
         return result;
     }
 
 
-    @PostMapping("productUpdate")
+@PostMapping("/productDelete")
+public List<Integer> productDelete(@RequestParam(value = "productNumber", required = false) List<Long> productNumbers) {
+    List<Integer> results = new ArrayList<>();
+
+    for(Long productNumber : productNumbers){
+        int result = productService.remove(productNumber);
+        results.add(result);
+    }
+    System.out.println(results+ " 1이 나오면 성공 ");
+    return results;
+}
+
+
+    @PostMapping("/productUpdate")
     public int productUpdate(ProductDto productDto, @RequestPart("productFile") List<MultipartFile> files) {
         Long productNumber=productDto.getProductNumber();
         if (productNumber == null) {
@@ -85,6 +113,13 @@ public class ProductController {
         }
         return 1;
     }
+
+
+
+
+
+
+
 
 
 

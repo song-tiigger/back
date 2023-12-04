@@ -8,5 +8,6 @@
         <typeAlias type="com.go.together.Dto.FileDto" alias="fileDto"/>
         <typeAlias type="com.go.together.Dto.CartDto" alias="cartDto"/>
         <typeAlias type="com.go.together.Vo.ProductVo" alias="productVo"/>
+        <typeAlias type="com.go.together.Vo.CartVo" alias="cartVo"/>
     </typeAliases>
 </configuration>

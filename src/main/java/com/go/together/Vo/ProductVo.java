@@ -13,6 +13,7 @@ import java.util.Date;
 @NoArgsConstructor
 public class ProductVo {
     private Long productNumber;
+    private int userNumber;
     private Long categoryMajorCode;
     private Long categoryMinorCode;
     private String productName;
