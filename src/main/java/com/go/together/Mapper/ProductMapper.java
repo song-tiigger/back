@@ -14,7 +14,7 @@ public interface ProductMapper {
     public int insertProduct(ProductDto productDto);
 
 //    게시글 VIEW
-    public ProductVo selectProduct(Long productNumber);
+    public List<ProductVo> selectProduct(Long productNumber);
 
 //    게시글 리스트
     public List<ProductVo> selectAllProduct(ProductVo productVo);

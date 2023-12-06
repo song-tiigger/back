@@ -34,7 +34,7 @@ public class ProductService {
 
 
 
-    public ProductVo findOneProduct(Long productNumber){
+    public List<ProductVo> findOneProduct(Long productNumber){
         if(productNumber == null){
             throw new IllegalArgumentException("상품게시글 번호가 없습니다");
         }

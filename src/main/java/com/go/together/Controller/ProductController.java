@@ -69,11 +69,11 @@ public class ProductController {
 
 
     @PostMapping("/productView")
-    public ProductVo productView(@RequestBody ProductVo productVo){
+    public List<ProductVo> productView(@RequestBody ProductVo productVo){
         Long productNumber = productVo.getProductNumber();
 
 
-        ProductVo result =productService.findOneProduct(productNumber);
+        List<ProductVo> result =productService.findOneProduct(productNumber);
         System.out.println(productNumber + "상품 번호확인 !!!");
 
         return result;
