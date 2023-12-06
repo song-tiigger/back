@@ -47,7 +47,7 @@ public class ProductService {
         if(productVo == null){
             throw new IllegalArgumentException("정보가 없습니다");
         }
-        return productMapper.selectAllProduct();
+        return productMapper.selectAllProduct(productVo);
     }
 
 
@@ -65,12 +65,6 @@ public class ProductService {
 
 // 상품 수정
 
-    public void modify(ProductDto productDto){
-        if(productDto == null){
-            throw new IllegalArgumentException("게시물 수정 정보가 없습니다.");
-        }
-        productMapper.updateProduct(productDto);
-    }
 
 
 public void modify (ProductDto productDto, List<MultipartFile> files) throws IOException {

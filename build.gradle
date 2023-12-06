@@ -49,6 +49,12 @@ dependencies {
 // https://mvnrepository.com/artifact/net.coobird/thumbnailator
     implementation 'net.coobird:thumbnailator:0.4.19'
 
+
+    //비밀번호 암호화
+//    implementation 'org.springframework.boot:spring-boot-starter-security'
+
+
+
 }
 
 tasks.named('test') {

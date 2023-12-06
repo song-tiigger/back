@@ -17,7 +17,7 @@ public interface ProductMapper {
     public ProductVo selectProduct(Long productNumber);
 
 //    게시글 리스트
-    public List<ProductVo> selectAllProduct();
+    public List<ProductVo> selectAllProduct(ProductVo productVo);
 
 
     public int delete(Long productNumber);
@@ -30,7 +30,19 @@ public interface ProductMapper {
     public int insertCart(CartVo cartVo);
 
 //    장바구니 조회
+    public List<CartVo> UserCart(CartVo cartVo);
 
+//    장바구니 수량 증가
+    public int addCart(CartVo cartVo);
+
+//    장바구니 수량 변경
+    public int updateCartPlus(CartVo cartVo);
+
+//    장바구니 수량 감소
+    public int minusCart(CartVo cartVo);
+
+//    장바구니 상품 삭제
+    public int deleteCart(Long cartNumber);
 
 
 

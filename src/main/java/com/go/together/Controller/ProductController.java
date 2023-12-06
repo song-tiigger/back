@@ -30,6 +30,9 @@ public class ProductController {
 //            throw new IllegalArgumentException("admin 아이디가 없습니다");
 //        }
 
+
+
+
         int result = productService.registerProduct(productDto);
         System.out.println(productDto + "상품 입력 값 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
 
@@ -68,8 +71,10 @@ public class ProductController {
     @PostMapping("/productView")
     public ProductVo productView(@RequestBody ProductVo productVo){
         Long productNumber = productVo.getProductNumber();
-        System.out.println(productNumber + "상품 번호확인 !!!");
+
+
         ProductVo result =productService.findOneProduct(productNumber);
+        System.out.println(productNumber + "상품 번호확인 !!!");
 
         return result;
 
@@ -117,10 +122,9 @@ public List<Integer> productDelete(@RequestParam(value = "productNumber", requir
 
 
 
-
-
-
-
+    
+    
+    
 
 
 }

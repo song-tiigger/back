@@ -63,8 +63,10 @@
 
     <update id="updateProduct">
     UPDATE TBL_PRODUCT
-    SET  PRODUCT_NAME=#{productName}, PRODUCT_COLOR#{productColor}, PRODUCT_PRICE=#{productPrice}, DISCOUNT_RATE=#{discountRate},
-         PRODUCT_EXPLANATION=#{productExplanation}, PRODUCT_QUANTITY=#{productQuantity}, PRODUCT_SIZE=#{productSize}
+    SET  PRODUCT_NAME=#{productName}, PRODUCT_COLOR=#{productColor}, PRODUCT_PRICE=#{productPrice},
+         PRODUCT_EXPLANATION=#{productExplanation},PRODUCT_EXPLANATION1=#{productExplanation1}
+        ,PRODUCT_EXPLANATION2=#{productExplanation2}, PRODUCT_QUANTITY=#{productQuantity}, PRODUCT_SIZE=#{productSize}
+        ,DISCOUNT_RATE=#{discountRate}
         WHERE PRODUCT_NUMBER=#{productNumber}
     </update>
 
@@ -98,7 +100,7 @@
 
 
     <!--    장바구니 상품 조회-->
-    <select id="selectCart">
+    <select id="selectCart" resultType="cartVo">
         SELECT C.CART_NUMBER,C.CART_COUNT,
                U.USER_NUMBER,U.USER_ID,
                P.PRODUCT_NUMBER,P.PRODUCT_NAME,P.PRODUCT_COLOR,P.PRODUCT_SIZE,P.PRODUCT_QUANTITY,P.PRODUCT_PRICE,
@@ -121,20 +123,36 @@
         WHERE USER_NUMBER=#{userNumber} AND PRODUCT_NUMBER=#{productNumber}
     </select>
 
+
+
     <!--    장바구지 상품 수량 추가-->
     <update id="addCart">
         UPDATE TBL_CART
         SET CART_COUNT = CART_COUNT + #{cartCount}
         WHERE CART_NUMBER = #{cartNumber}
     </update>
-<!--장바구니 상품 수량 감소-->
-    <update id="updateCartMinus">
+
+    <!--    장바구니 상품 수량 변경-->
+    <update id="updateCartPlus">
+        UPDATE TBL_CART
+        SET CART_COUNT = #{cartCount}
+        WHERE CART_NUMBER = #{cartNumber}
+    </update>
+
+    <!--장바구니 상품 수량 감소-->
+    <update id="minusCart">
         UPDATE TBL_CART
         SET CART_COUNT = #{cartCount} - CART_COUNT
         WHERE CART_NUMBER = #{cartNumber}
     </update>
 
 
+    <!--    장바구니 상품 삭제-->
+    <delete id="deleteCart">
+        DELETE
+        FROM TBL_CART
+        WHERE CART_NUMBER = #{cartNumber}
+    </delete>
 
 
 

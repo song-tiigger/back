@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 public class CartVo {
 
     private long cartNumber;
-    private long userNumber;
+    private int userNumber;
     private String userId;
     private long productNumber;
     private int cartCount;
