@@ -4,6 +4,7 @@ import com.go.together.Dto.UserDto;
 import com.go.together.Mapper.UserMapper;
 import lombok.RequiredArgsConstructor;
 //import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+//import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -13,12 +14,14 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class UserService {
     private final UserMapper userMapper;
+//    private final BCryptPasswordEncoder passwordEncoder;
 
     //회원 등록
     public int register(UserDto userDto) {
         if (userDto == null) {
             throw new IllegalArgumentException("회원정보누락!");
         }
+//        userDto.setUserPassword(passwordEncoder.encode(userDto.getUserPassword()));
 
         return userMapper.insert(userDto);
     }

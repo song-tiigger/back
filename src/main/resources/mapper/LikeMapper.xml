@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.go.together.Mapper.FileMapper">
+
+
+
+
+<insert id="insertLike" parameterType="likeVo">
+    INSERT INTO TBL_LIKE(LIKE_NUMBER, PRODUCT_NUMBER,USER_NUMBER)
+    VALUES (SEQ_LIKE.nextval,#{productNumber},#{userNumber})
+</insert>
+
+
+
+
+
+<select id="selectLike" parameterType="likeVo">
+    SELECT L.LIKE_NUMBER
+         ,U.USER_NUMBER,U.USER_NAME
+         , P.PRODUCT_NUMBER,P.PRODUCT_NAME
+         ,F.FILE_NAME,F.FILE_UPLOAD_PATH,F.FILE_UUID
+    FROM TBL_USER U
+             JOIN TBL_LIKE L ON U.USER_NUMBER = L.LIKE_NUMBER
+             JOIN TBL_PRODUCT P ON P.PRODUCT_NUMBER = L.LIKE_NUMBER
+             LEFT JOIN TBL_FILE F ON F.PRODUCT_NUMBER =P.PRODUCT_NUMBER
+
+            WHERE USER_NUMBER=#{userNumber};
+</select>
+
+
+
+
+
+
+
+
+</mapper>
+
+
