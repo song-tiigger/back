@@ -54,6 +54,16 @@ dependencies {
 //    implementation 'org.springframework.boot:spring-boot-starter-security'
 
 
+
+
+//    구글 메일
+    // https://mvnrepository.com/artifact/com.google.code.gson/gson
+    implementation 'com.google.code.gson:gson:2.8.7'
+    //json-simple
+    // https://mvnrepository.com/artifact/com.googlecode.json-simple/json-simple
+    implementation 'com.googlecode.json-simple:json-simple:1.1.1'
+    // https://mvnrepository.com/artifact/com.sun.mail/javax.mail
+    implementation 'com.sun.mail:javax.mail:1.6.2'
 }
 
 tasks.named('test') {

@@ -50,12 +50,8 @@ public class UserController {
     @PostMapping("/login")
     public UserDto login(@RequestBody UserDto userDto) {
         UserDto result = userService.findUserNumber(userDto);
-//
-//        // 세션 가져오기
-//        HttpSession session = req.getSession();
-//        // 세션에 userNumber 저장하기
-//        session.setAttribute("userNumber", result.getUserNumber());
 
+        System.out.println(result);
         System.out.println("로그인 성공 ! ! ! ! ! ! !");
         return result;
     }

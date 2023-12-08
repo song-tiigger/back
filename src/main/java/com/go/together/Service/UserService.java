@@ -2,6 +2,7 @@ package com.go.together.Service;
 
 import com.go.together.Dto.UserDto;
 import com.go.together.Mapper.UserMapper;
+import com.go.together.Util.Util;
 import lombok.RequiredArgsConstructor;
 //import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 //import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -23,6 +24,11 @@ public class UserService {
         }
 //        userDto.setUserPassword(passwordEncoder.encode(userDto.getUserPassword()));
 
+        String userPassword = Util.pwSha256(userDto.getUserPassword());
+        userDto.setUserPassword(userPassword);
+
+
+
         return userMapper.insert(userDto);
     }
 
@@ -37,7 +43,6 @@ public class UserService {
         if (userDto == null) {
             throw new IllegalArgumentException("아이디 패스워드 누락");
         }
-
 
         return Optional.ofNullable(userMapper.selectById(userDto))
                 .orElseThrow(() -> {
@@ -75,6 +80,10 @@ public class UserService {
         if (userDto == null) {
             throw new IllegalArgumentException("수정할 회원정보 누락");
         }
+
+        String userPassword = Util.pwSha256(userDto.getUserPassword());
+        userDto.setUserPassword(userPassword);
+
         return Optional.ofNullable(userMapper.updatePw(userDto))
                 .orElseThrow(() -> new IllegalArgumentException("일치하는 회원 아이디가 없습니다"));
     }

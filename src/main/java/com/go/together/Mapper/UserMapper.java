@@ -10,6 +10,9 @@ public interface UserMapper {
     //유저 회원가입
     public int insert(UserDto userDto);
 
+    // 아이디로 회원 가져오기.
+    public UserDto selectById(UserDto userDto);
+
     //아이디찾기
     public String findUserId(UserDto userDto);
 
@@ -18,9 +21,6 @@ public interface UserMapper {
 
     //회원 업데이트
     public int updatePw(UserDto userDto);
-
-    // 아이디로 회원 가져오기.
-    public UserDto selectById(UserDto userDto);
 
     //유저 아이디 중복확인
     public int checkUserId(UserDto userDto);

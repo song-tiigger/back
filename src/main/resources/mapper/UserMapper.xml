@@ -2,18 +2,6 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
     <mapper namespace="com.go.together.Mapper.UserMapper">
 
-<!--유저 회원가입-->
-<!--    <insert id="insert">-->
-<!--        <selectKey keyProperty="userNumber" order="BEFORE" resultType="long">-->
-<!--            SELECT SEQ_USER.NEXTVAL FROM DUAL-->
-<!--        </selectKey>-->
-<!--        insert into TBL_USER (USER_NUMBER, USER_NAME, USER_ID, USER_PASSWORD, USER_EMAIL,-->
-<!--        USER_ADDRESS_NUMBER,USER_ADDRESS1,USER_ADDRESS2,-->
-<!--        USER_ADDRESS3 , USER_PHONE_NUMBER)-->
-<!--        values (#{userNumber}, #{userName}, #{userId}, #{userPassword}, #{userEmail},-->
-<!--        #{userAddressNumber}, #{userAddress1}, #{userAddress2},-->
-<!--        #{userAddress3} ,#{userPhoneNumber})-->
-<!--    </insert>-->
     <insert id="insert">
         <selectKey keyProperty="userNumber" order="BEFORE" resultType="int">
             SELECT SEQ_USER.NEXTVAL FROM DUAL
@@ -26,15 +14,6 @@
         #{userAddress3} ,#{userPhoneNumber})
     </insert>
 
-
-
-<!--    <insert id="insert">-->
-<!--        <selectKey keyProperty="userNumber" order="BEFORE" resultType="long">-->
-<!--            SELECT SEQ_USER.NEXTVAL FROM DUAL-->
-<!--        </selectKey>-->
-<!--        insert into TBL_USER (USER_NUMBER, USER_NAME, USER_PASSWORD, USER_ADDRESS1, USER_EMAIL)-->
-<!--        values (#{userNumber}, #{userName}, #{userPassword}, #{userEmail} ,#{userAddress1})-->
-<!--    </insert>-->
 
 <!--유저 로그인-->
     <select id="selectById" resultType="userDto">
