@@ -24,15 +24,6 @@ public class ProductController {
 
     @PostMapping("/registerProduct")
     public int registerProduct(ProductDto productDto, @RequestPart("productFile") List<MultipartFile> files) {
-
-        //        String userId = productDto.getUserId();
-//        if (!"admin".equals(userId)) {
-//            throw new IllegalArgumentException("admin 아이디가 없습니다");
-//        }
-
-
-
-
         int result = productService.registerProduct(productDto);
         System.out.println(productDto + "상품 입력 값 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
 

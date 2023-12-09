@@ -13,7 +13,9 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -24,13 +26,36 @@ public class ProductService {
     private final FileMapper fileMapper;
 
 
+//    public int registerProduct(ProductDto productDto){
+//        if(productDto == null){
+//            throw new IllegalArgumentException("정보가 없습니다");
+//        }
+//        System.out.println("상품 등록완료!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+//        return productMapper.insertProduct(productDto);
+//    }
+
     public int registerProduct(ProductDto productDto){
         if(productDto == null){
             throw new IllegalArgumentException("정보가 없습니다");
         }
+
+        int result = productMapper.insertProduct(productDto);
+        Long productNumber = productDto.getProductNumber();
+
+        // 사이즈 등록
+//        List<String> productSizes = productDto.getProductSizes(); // <- 수정된 부분
+//        for (int i = 0; i < productSizes.size(); i++) {
+//            String size = productSizes.get(i);
+//            Map<String, Object> paramMap = new HashMap<>();
+//            paramMap.put("productNumber", productNumber);
+//            paramMap.put("productSize", size);
+//            productMapper.insertSize(paramMap);
+//        }
+
         System.out.println("상품 등록완료!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-        return productMapper.insertProduct(productDto);
+        return result;
     }
+
 
 
 

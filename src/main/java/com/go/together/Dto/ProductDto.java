@@ -7,6 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
+import java.util.List;
 
 @Component
 @Data
@@ -27,6 +28,7 @@ public class ProductDto {
     private String productExplanation2;
     private int productQuantity;
     private String productSize;
+    private List<String> productSizes;
     private Date productRegisterDate;
     private String userId;
 }

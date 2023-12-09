@@ -12,6 +12,11 @@
     </insert>
 
 
+    <insert id="insertSize">
+    INSERT INTO TBL_PRODUCT_SIZE(PRODUCT_NUMBER, PRODUCT_SIZE)
+    VALUES (#{productNumber},#{productSize})
+    </insert>
+
 
 <!-- 상품 번호에 맞는 상세 페이지 select -->
     <select id="selectProduct" resultType="productVo">
