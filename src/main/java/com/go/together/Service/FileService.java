@@ -115,6 +115,12 @@ public class FileService {
     public void registerAndSaveFiles(List<MultipartFile> files, Long productNumber) throws IOException{
         for(MultipartFile file : files){
             FileDto fileDto = saveFile(file);
+
+
+//            for (int i = 0; i < files.size(); i++) {
+//                MultipartFile file = files.get(i);
+
+
             fileDto.setProductNumber(productNumber);
             register(fileDto);
         }

@@ -2,10 +2,10 @@ package com.go.together.Service;
 
 import com.go.together.Dto.UserDto;
 import com.go.together.Mapper.UserMapper;
+import com.go.together.Util.MailUtil;
 import com.go.together.Util.Util;
 import lombok.RequiredArgsConstructor;
-//import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-//import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,7 +15,15 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class UserService {
     private final UserMapper userMapper;
-//    private final BCryptPasswordEncoder passwordEncoder;
+
+    // 구글 이메일
+    @Value("${google.id}")
+    private String myEmail;
+    // 구글 비번
+    @Value("${google.pw}")
+    private String myPw;
+
+
 
     //회원 등록
     public int register(UserDto userDto) {
@@ -43,6 +51,10 @@ public class UserService {
         if (userDto == null) {
             throw new IllegalArgumentException("아이디 패스워드 누락");
         }
+
+        // 사용자가 입력한 비밀번호를 암호화
+        String userPassword = Util.pwSha256(userDto.getUserPassword());
+        userDto.setUserPassword(userPassword);
 
         return Optional.ofNullable(userMapper.selectById(userDto))
                 .orElseThrow(() -> {
@@ -76,9 +88,43 @@ public class UserService {
                 .orElseThrow(() -> new IllegalArgumentException("비밀번호를 변경하기위해 일치하는 회원정보가 없습니다."));
     }
 
+
+
+
+
+//    public int modify(UserDto userDto) {
+//        if (userDto == null) {
+//            throw new IllegalArgumentException("수정할 회원정보 누락");
+//        }
+//
+//        String userPassword = Util.pwSha256(userDto.getUserPassword());
+//        userDto.setUserPassword(userPassword);
+//
+//        return Optional.ofNullable(userMapper.updatePw(userDto))
+//                .orElseThrow(() -> new IllegalArgumentException("일치하는 회원 아이디가 없습니다"));
+//    }
+
     public int modify(UserDto userDto) {
         if (userDto == null) {
             throw new IllegalArgumentException("수정할 회원정보 누락");
+        }
+
+//        userDto.setUserEmail("higggu96@gmail.com");
+        UserDto setEmail = userMapper.userListAll(userDto);
+        if (setEmail == null) {
+            throw new IllegalArgumentException("해당하는 회원 정보가 없습니다.");
+        }
+
+        // 사용자 정보에서 이메일을 가져와 userDto에 설정합니다.
+        userDto.setUserEmail(setEmail.getUserEmail());
+
+        if (userMapper.updatePw(userDto) > 0) {
+            try {
+                MailUtil.Send(userDto.getUserEmail(), myEmail, myPw ,userDto);
+            } catch (Exception e) {
+                e.printStackTrace();
+                // 예외 처리 로직 추가
+            }
         }
 
         String userPassword = Util.pwSha256(userDto.getUserPassword());
@@ -87,20 +133,6 @@ public class UserService {
         return Optional.ofNullable(userMapper.updatePw(userDto))
                 .orElseThrow(() -> new IllegalArgumentException("일치하는 회원 아이디가 없습니다"));
     }
-
-//    public int modify(UserDto userDto) {
-//        if (userDto == null) {
-//            throw new IllegalArgumentException("수정할 회원정보 누락");
-//        }
-//
-//        // 비밀번호 암호화
-//        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-//        String encryptedPassword = passwordEncoder.encode(userDto.getUserPassword());
-//        userDto.setUserPassword(encryptedPassword);
-//
-//        return Optional.ofNullable(userMapper.updatePw(userDto))
-//                .orElseThrow(() -> new IllegalArgumentException("일치하는 회원 아이디가 없습니다"));
-//    }
 
 
 

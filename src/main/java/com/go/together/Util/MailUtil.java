@@ -1,6 +1,8 @@
 package com.go.together.Util;
 
 
+import com.go.together.Dto.UserDto;
+
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
@@ -11,8 +13,8 @@ public class MailUtil {
     static final String smtp_host = "smtp.gmail.com";
     static final int smtp_port = 465;  // TLS : 587, SSL : 465
 
-    public static void Send(String emailAddress, String randomCode, String myEmail, String myPw) throws Exception {
-        System.out.println("전송할 이메일 주소" + emailAddress + "랜덤 코드" + randomCode);
+    public static void Send(String userEmail, String myEmail, String myPw,UserDto userDto) throws Exception {
+        System.out.println("전송할 이메일 주소" + userEmail );
         System.out.println("id" + myEmail + "password" + myPw);
         Properties props = System.getProperties();
         props.put("mail.smtp.host", smtp_host);
@@ -34,7 +36,7 @@ public class MailUtil {
             // 받는 이메일
             message.setRecipients(
                     Message.RecipientType.TO,
-                    InternetAddress.parse(emailAddress)
+                    InternetAddress.parse(userEmail)
             );
 
             // 제목
@@ -43,7 +45,7 @@ public class MailUtil {
             // 내용
             message.setText("보안을 위해 비밀번호를 변경하는 메일입니다.\n\n " +
                     "새로운 비밀번호를 아래의 코드로 변경하였으니 로그인 후 설정에서 비밀번호를 변경하시길 바랍니다.\n\n" +
-                    "새 비밀번호 : " + randomCode);
+                    "새 비밀번호 : "+userDto.getUserPassword());
 
             // 발송
             Transport.send(message);

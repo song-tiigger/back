@@ -19,7 +19,7 @@ public interface UserMapper {
     //비밀번호 찾기
     public int findUserPassword(UserDto userDto);
 
-    //회원 업데이트
+    //비밀번호 바꾸기
     public int updatePw(UserDto userDto);
 
     //유저 아이디 중복확인

@@ -63,7 +63,10 @@ public class UserController {
 
     @PostMapping("/searchId")
     public String searchId(@RequestBody UserDto userDto) {
+
         String res =userService.searchUserId(userDto);
+
+        System.out.println(res + ""+"아이디입니다 !!!");
 
         return res;
     }
@@ -73,7 +76,7 @@ public class UserController {
     @PostMapping("/searchPw")
     public int searchPw(@RequestBody UserDto userDto){
         int res=userService.searchUserPassword(userDto);
-
+        System.out.println(res+"userNumber이 나오는건가 ?? !!!!!!!!!!!!!!!!!");
         return res;
     }
     //아이디 중복확인
@@ -81,6 +84,7 @@ public class UserController {
     @PostMapping("/checkId")
     public int checkId(@RequestBody  UserDto userDto){
         int res=userService.idCheck(userDto);
+        System.out.println(res + "값이 1이 들어오는가 ?");
         return res;
     }
 
@@ -89,12 +93,14 @@ public class UserController {
     @PostMapping("/modifyPw")
     public int modifyMy(@RequestBody UserDto userDto) {
         Integer userNumber = userDto.getUserNumber();
+        System.out.println(userNumber+"userNumber 나오는가 ? 받아오는거 맞겠지 ?");
+
         if (userNumber == null) {
             // userNumber가 null인 경우에 대한 처리
             throw new IllegalArgumentException("userNumber이 없습니다.");
         }
         int res = userService.modify(userDto);
-        System.out.println("---------------------------!!!!!!!!!!!!");
+        System.out.println("메일보내지고 수정이 완료된건가 ?---------------------------!!!!!!!!!!!!");
         System.out.println(userDto);
         return res;
     }

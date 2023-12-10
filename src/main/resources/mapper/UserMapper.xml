@@ -29,17 +29,6 @@
         WHERE USER_NAME = #{userName} AND USER_PHONE_NUMBER = #{userPhoneNumber}
     </select>
 
-    <!-- 비밀번호 찾기: 아이디, 이름, 핸드폰 번호로 비밀번호 조회 -->
-<!--    <select id="findUserPassword" resultType="string">-->
-<!--        SELECT USER_PASSWORD-->
-<!--        FROM TBL_USER-->
-<!--        WHERE USER_ID = #{userId} AND USER_NAME = #{userName} AND USER_PHONE_NUMBER = #{userPhoneNumber}-->
-<!--    </select>-->
-<!--    <select id="findUserPassword" resultType="string">-->
-<!--        SELECT *-->
-<!--        FROM TBL_USER-->
-<!--        WHERE USER_ID = #{userId} AND USER_NAME = #{userName} AND USER_PHONE_NUMBER = #{userPhoneNumber}-->
-<!--    </select>-->
 
     <select id="findUserPassword" resultType="int">
         SELECT USER_NUMBER
