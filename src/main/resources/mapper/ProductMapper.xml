@@ -5,10 +5,10 @@
         <selectKey keyProperty="productNumber" order="BEFORE" resultType="long">
             SELECT SEQ_PRODUCT.NEXTVAL FROM DUAL
         </selectKey>
-        INSERT INTO TBL_PRODUCT (PRODUCT_NUMBER,CATEGORY_MAJOR_CODE, CATEGORY_MINOR_CODE, PRODUCT_NAME, PRODUCT_COLOR, PRODUCT_PRICE, DISCOUNT_RATE,
-                                 PRODUCT_EXPLANATION, PRODUCT_QUANTITY, PRODUCT_SIZE,PRODUCT_REGISTER_DATE,USER_ID,USER_NUMBER)
-        VALUES (#{productNumber}, #{categoryMajorCode},#{categoryMinorCode}, #{productName}, #{productColor}, #{productPrice}, #{discountRate},
-          #{productExplanation}, #{productQuantity}, #{productSize},SYSDATE,#{userId},#{userNumber})
+        INSERT INTO TBL_PRODUCT (PRODUCT_NUMBER,CATEGORY_MAJOR_CODE, CATEGORY_MINOR_CODE, PRODUCT_NAME, PRODUCT_SIZE, PRODUCT_COLOR, PRODUCT_PRICE, DISCOUNT_RATE,
+                                 PRODUCT_EXPLANATION,PRODUCT_EXPLANATION1,PRODUCT_EXPLANATION2, PRODUCT_QUANTITY,PRODUCT_REGISTER_DATE,USER_ID,USER_NUMBER)
+        VALUES (#{productNumber}, #{categoryMajorCode},#{categoryMinorCode}, #{productName}, #{productSize}, #{productColor}, #{productPrice}, #{discountRate},
+          #{productExplanation}, #{productExplanation1}, #{productExplanation2}, #{productQuantity},SYSDATE,#{userId},#{userNumber})
     </insert>
 
 
