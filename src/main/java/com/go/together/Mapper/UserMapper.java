@@ -29,6 +29,8 @@ public interface UserMapper {
     //유저 정보 리스트로 모두 가져오기 . 마이페이지쪽 정보
     public UserDto userListAll(UserDto userDto);
 
+//   CODE 저장
+    public void saveVerificationCode(UserDto userDto);
 
 
 }

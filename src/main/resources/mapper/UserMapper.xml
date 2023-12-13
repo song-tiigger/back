@@ -29,12 +29,22 @@
         WHERE USER_NAME = #{userName} AND USER_PHONE_NUMBER = #{userPhoneNumber}
     </select>
 
-
     <select id="findUserPassword" resultType="int">
         SELECT USER_NUMBER
         FROM TBL_USER
-        WHERE USER_ID = #{userId} AND USER_NAME = #{userName} AND USER_PHONE_NUMBER = #{userPhoneNumber}
+        WHERE USER_ID = #{userId}
     </select>
+
+
+    <update id="saveVerificationCode" parameterType="UserDto">
+        UPDATE TBL_USER
+        SET VERIFICATION_CODE = #{verificationCode}
+        WHERE USER_NUMBER = #{userNumber}
+    </update>
+
+
+
+
 
     <update id="updatePw" >
         update tbl_user

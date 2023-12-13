@@ -79,6 +79,39 @@ public class UserController {
         System.out.println(res+"userNumber이 나오는건가 ?? !!!!!!!!!!!!!!!!!");
         return res;
     }
+
+
+
+//    입력한 이메일로 인증
+    @PostMapping("/verifyEmail")
+    public UserDto  verifyEmail(@RequestBody UserDto userDto){
+        Integer userNumber = userDto.getUserNumber();
+        System.out.println(userNumber+"userNumber 나오는가 ? 받아오는거 맞겠지 ?");
+        userService.checkEmail(userDto);
+
+
+        String code=userDto.getVerificationCode();
+
+        System.out.println(code+"무작위코드!!!!!!!!!!!!!!!!!!!!!");
+
+        return userDto;
+
+
+    }
+
+    @PostMapping("/verifyCode")
+    public UserDto  verifyCode(@RequestBody UserDto userDto) {
+        Integer userNumber = userDto.getUserNumber();
+        System.out.println(userNumber+"userNumber 나오는가 ? 받아오는거 맞겠지 ?");
+
+        userService.verifyCode(userDto);
+        return userDto;
+
+    }
+
+
+
+
     //아이디 중복확인
 
     @PostMapping("/checkId")

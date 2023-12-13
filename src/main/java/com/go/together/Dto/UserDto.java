@@ -15,11 +15,11 @@ public class UserDto{
     private String userName;
     private String userId;
     private String userPassword;
-    private String confirmPassword;
     private String userEmail;
     private String userAddressNumber;
     private String userAddress1;
     private String userAddress2;
     private String userAddress3;
     private String userPhoneNumber;
+    private String verificationCode;
 }

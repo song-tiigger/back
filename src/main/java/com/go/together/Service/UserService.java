@@ -63,13 +63,6 @@ public class UserService {
     }
 
 
-//    public String searchUserId(UserDto userDto) {
-//        if (userDto == null) {
-//            throw new IllegalArgumentException("이름 ,핸드폰번호 누락");
-//        }
-//        return Optional.ofNullable(userMapper.findUserId(userDto))
-//                .orElseThrow(() -> new IllegalArgumentException("없는 이름 "));
-//    }
 
     public String searchUserId(UserDto userDto) {
         if (userDto == null) {
@@ -118,9 +111,13 @@ public class UserService {
         // 사용자 정보에서 이메일을 가져와 userDto에 설정합니다.
         userDto.setUserEmail(setEmail.getUserEmail());
 
+        String randomCode = Util.generateRandomString();
+
+
+
         if (userMapper.updatePw(userDto) > 0) {
             try {
-                MailUtil.Send(userDto.getUserEmail(), myEmail, myPw ,userDto);
+                MailUtil.Send(userDto.getUserEmail(),randomCode, myEmail, myPw ,userDto);
             } catch (Exception e) {
                 e.printStackTrace();
                 // 예외 처리 로직 추가
@@ -156,7 +153,106 @@ public UserDto getUserList(UserDto userDto){
             .orElseThrow(() -> new IllegalArgumentException("회원번호가 없습니다"));
 }
 
+
+
+
+
+
+////이메일 인증
+//public void checkEmail(UserDto userDto){
+//    UserDto existingUser = userMapper.userListAll(userDto);
+//    if (existingUser == null) {
+//        throw new IllegalArgumentException("해당하는 회원 정보가 없습니다.");
+//    }
+//
+//
+//    if(!existingUser.getUserEmail().equals(userDto.getUserEmail())){
+//        throw new IllegalArgumentException("입력한 이메일과 회원의 이메일 일치 X");
+//    }
+//
+//    // 사용자 정보에서 이메일을 가져와 userDto에 설정합니다.
+//    userDto.setUserEmail(existingUser.getUserEmail());
+//    String randomCode = Util.generateRandomString();
+//    userDto.setVerificationCode(randomCode);
+//    userMapper.saveVerificationCode(userDto);
+//
+//
+//        try {
+//            MailUtil.Send(userDto.getUserEmail(),randomCode, myEmail, myPw ,userDto);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            // 예외 처리 로직 추가
+//        }
+//    }
+//
+//
+//
+//
+//    public void verifyCode(UserDto userDto) {
+//        UserDto existingUser = userMapper.userListAll(userDto);
+//        if(!existingUser.getVerificationCode().equals(userDto.getVerificationCode())){
+//            throw new IllegalArgumentException("코드 입력한게 서로달라요");
+//        }
+//    }
+//
+
+
+    public UserDto checkEmail(UserDto userDto) {
+        UserDto existingUser = userMapper.userListAll(userDto);
+        if (existingUser == null) {
+            throw new IllegalArgumentException("해당하는 회원 정보가 없습니다.");
+        }
+
+        if (!existingUser.getUserEmail().equals(userDto.getUserEmail())) {
+            throw new IllegalArgumentException("입력한 이메일과 회원의 이메일 일치 X");
+        }
+
+        userDto.setUserEmail(existingUser.getUserEmail());
+        String randomCode = Util.generateRandomString();
+        userDto.setVerificationCode(randomCode);
+        userMapper.saveVerificationCode(userDto);
+
+        try {
+            MailUtil.Send(userDto.getUserEmail(), randomCode, myEmail, myPw, userDto);
+        } catch (Exception e) {
+            e.printStackTrace();
+            // 예외 처리 로직 추가
+        }
+
+        return userDto;
+    }
+
+    public UserDto verifyCode(UserDto userDto) {
+        UserDto existingUser = userMapper.userListAll(userDto);
+        if (!existingUser.getVerificationCode().equals(userDto.getVerificationCode())) {
+            throw new IllegalArgumentException("코드 입력한게 서로달라요");
+        }
+
+        return userDto;
+    }
+
+//    public void checkRandomNumber(UserDto userDto) {
+//
+//        UserDto code =userDto.getVerificationCode();
+//        if (!code.equals(userDto.getVerificationCode())) {
+//            throw new IllegalArgumentException("일치하는 코드가 아닙니다");
+//        }
+//        String randomCode = Util.generateRandomString();
+//        userDto.setVerificationCode(randomCode);
+//    }
+
+
+//    private void setVerificationCode(UserDto userDto) {
+//        String randomCode = Util.generateRandomString();
+//        userDto.setVerificationCode(randomCode);
+//    }
+
+
 }
+
+
+
+
 
 
 
