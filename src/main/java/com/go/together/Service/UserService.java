@@ -103,26 +103,26 @@ public class UserService {
         }
 
 //        userDto.setUserEmail("higggu96@gmail.com");
-        UserDto setEmail = userMapper.userListAll(userDto);
-        if (setEmail == null) {
-            throw new IllegalArgumentException("해당하는 회원 정보가 없습니다.");
-        }
-
-        // 사용자 정보에서 이메일을 가져와 userDto에 설정합니다.
-        userDto.setUserEmail(setEmail.getUserEmail());
-
-        String randomCode = Util.generateRandomString();
-
-
-
-        if (userMapper.updatePw(userDto) > 0) {
-            try {
-                MailUtil.Send(userDto.getUserEmail(),randomCode, myEmail, myPw ,userDto);
-            } catch (Exception e) {
-                e.printStackTrace();
-                // 예외 처리 로직 추가
-            }
-        }
+//        UserDto setEmail = userMapper.userListAll(userDto);
+//        if (setEmail == null) {
+//            throw new IllegalArgumentException("해당하는 회원 정보가 없습니다.");
+//        }
+//
+//        // 사용자 정보에서 이메일을 가져와 userDto에 설정합니다.
+//        userDto.setUserEmail(setEmail.getUserEmail());
+//
+//        String randomCode = Util.generateRandomString();
+//
+//
+//
+//        if (userMapper.updatePw(userDto) > 0) {
+//            try {
+//                MailUtil.Send(userDto.getUserEmail(),randomCode, myEmail, myPw ,userDto);
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//                // 예외 처리 로직 추가
+//            }
+//        }
 
         String userPassword = Util.pwSha256(userDto.getUserPassword());
         userDto.setUserPassword(userPassword);
@@ -213,7 +213,7 @@ public UserDto getUserList(UserDto userDto){
         userMapper.saveVerificationCode(userDto);
 
         try {
-            MailUtil.Send(userDto.getUserEmail(), randomCode, myEmail, myPw, userDto);
+            MailUtil.Send(userDto.getUserEmail(), randomCode, myEmail, myPw);
         } catch (Exception e) {
             e.printStackTrace();
             // 예외 처리 로직 추가
