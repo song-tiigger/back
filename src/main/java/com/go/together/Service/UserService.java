@@ -197,7 +197,7 @@ public UserDto getUserList(UserDto userDto){
 //
 
 
-    public UserDto checkEmail(UserDto userDto) {
+    public int checkEmail(UserDto userDto) {
         UserDto existingUser = userMapper.userListAll(userDto);
         if (existingUser == null) {
             throw new IllegalArgumentException("해당하는 회원 정보가 없습니다.");
@@ -219,16 +219,16 @@ public UserDto getUserList(UserDto userDto){
             // 예외 처리 로직 추가
         }
 
-        return userDto;
+        return 100;
     }
 
-    public UserDto verifyCode(UserDto userDto) {
+    public int verifyCode(UserDto userDto) {
         UserDto existingUser = userMapper.userListAll(userDto);
         if (!existingUser.getVerificationCode().equals(userDto.getVerificationCode())) {
             throw new IllegalArgumentException("코드 입력한게 서로달라요");
         }
 
-        return userDto;
+        return 100;
     }
 
 //    public void checkRandomNumber(UserDto userDto) {

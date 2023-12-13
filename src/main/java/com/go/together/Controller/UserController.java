@@ -84,28 +84,28 @@ public class UserController {
 
 //    입력한 이메일로 인증
     @PostMapping("/verifyEmail")
-    public UserDto  verifyEmail(@RequestBody UserDto userDto){
+    public int  verifyEmail(@RequestBody UserDto userDto){
         Integer userNumber = userDto.getUserNumber();
         System.out.println(userNumber+"userNumber 나오는가 ? 받아오는거 맞겠지 ?");
-        userService.checkEmail(userDto);
+        int res=userService.checkEmail(userDto);
 
 
         String code=userDto.getVerificationCode();
 
         System.out.println(code+"무작위코드!!!!!!!!!!!!!!!!!!!!!");
 
-        return userDto;
+        return res;
 
 
     }
 
     @PostMapping("/verifyCode")
-    public UserDto  verifyCode(@RequestBody UserDto userDto) {
+    public int  verifyCode(@RequestBody UserDto userDto) {
         Integer userNumber = userDto.getUserNumber();
         System.out.println(userNumber+"userNumber 나오는가 ? 받아오는거 맞겠지 ?");
 
-        userService.verifyCode(userDto);
-        return userDto;
+       int res= userService.verifyCode(userDto);
+        return res;
 
     }
 
