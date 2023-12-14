@@ -30,11 +30,34 @@ public class ProductService {
         if(productDto == null){
             throw new IllegalArgumentException("정보가 없습니다");
         }
+
+        int result = productMapper.insertProduct(productDto);
         System.out.println("상품 등록완료!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-        return productMapper.insertProduct(productDto);
+
+        List<String> productSizes = productDto.getProductSizes();
+        if (productSizes != null) {
+            for (String Allsize : productSizes) {
+                Map<String, Object> paramMap = new HashMap<>();
+                paramMap.put("productNumber", productDto.getProductNumber());
+                paramMap.put("productSizes", Allsize);
+                productMapper.insertSize(paramMap);
+            }
+        }
+
+        List<String> productColors = productDto.getProductColors();
+        if (productColors != null) {
+            for (String color : productColors) {
+                Map<String, Object> colorParamMap = new HashMap<>();
+                colorParamMap.put("productNumber", productDto.getProductNumber());
+                colorParamMap.put("productColors", color);
+                productMapper.insertColor(colorParamMap);
+            }
+        }
+
+
+
+        return result;
     }
-
-
 
     // 사이즈 등록
 //        List<String> productSizes = productDto.getProductSizes(); // <- 수정된 부분
@@ -73,6 +96,7 @@ public class ProductService {
             throw new IllegalArgumentException("상품게시글 번호가가 없습니다");
         }
         fileMapper.delete(productNumber);
+        productMapper.sizeDelete(productNumber);
         return productMapper.delete(productNumber);
     }
 

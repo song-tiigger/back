@@ -1,62 +1,188 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.go.together.Mapper.ProductMapper">
-    <insert id="insertProduct">
+
+<!--    <insert id="insertProduct">-->
+<!--        <selectKey keyProperty="productNumber" order="BEFORE" resultType="long">-->
+<!--            SELECT SEQ_PRODUCT.NEXTVAL FROM DUAL-->
+<!--        </selectKey>-->
+<!--        INSERT INTO TBL_PRODUCT (PRODUCT_NUMBER,CATEGORY_MAJOR_CODE, CATEGORY_MINOR_CODE, PRODUCT_NAME, PRODUCT_COLOR, PRODUCT_PRICE, DISCOUNT_RATE,-->
+<!--                                 PRODUCT_EXPLANATION,PRODUCT_EXPLANATION1,PRODUCT_EXPLANATION2, PRODUCT_QUANTITY,PRODUCT_REGISTER_DATE,USER_ID,USER_NUMBER)-->
+<!--        VALUES (#{productNumber}, #{categoryMajorCode},#{categoryMinorCode}, #{productName}, #{productColor}, #{productPrice}, #{discountRate},-->
+<!--          #{productExplanation}, #{productExplanation1}, #{productExplanation2}, #{productQuantity},SYSDATE,#{userId},#{userNumber})-->
+<!--    </insert>-->
+
+  <insert id="insertProduct">
         <selectKey keyProperty="productNumber" order="BEFORE" resultType="long">
             SELECT SEQ_PRODUCT.NEXTVAL FROM DUAL
         </selectKey>
-        INSERT INTO TBL_PRODUCT (PRODUCT_NUMBER,CATEGORY_MAJOR_CODE, CATEGORY_MINOR_CODE, PRODUCT_NAME, PRODUCT_SIZE, PRODUCT_COLOR, PRODUCT_PRICE, DISCOUNT_RATE,
+        INSERT INTO TBL_PRODUCT (PRODUCT_NUMBER,CATEGORY_MAJOR_CODE, CATEGORY_MINOR_CODE, PRODUCT_NAME, PRODUCT_PRICE, DISCOUNT_RATE,
                                  PRODUCT_EXPLANATION,PRODUCT_EXPLANATION1,PRODUCT_EXPLANATION2, PRODUCT_QUANTITY,PRODUCT_REGISTER_DATE,USER_ID,USER_NUMBER)
-        VALUES (#{productNumber}, #{categoryMajorCode},#{categoryMinorCode}, #{productName}, #{productSize}, #{productColor}, #{productPrice}, #{discountRate},
+        VALUES (#{productNumber}, #{categoryMajorCode},#{categoryMinorCode}, #{productName}, #{productPrice}, #{discountRate},
           #{productExplanation}, #{productExplanation1}, #{productExplanation2}, #{productQuantity},SYSDATE,#{userId},#{userNumber})
     </insert>
 
 
     <insert id="insertSize">
-    INSERT INTO TBL_PRODUCT_SIZE(PRODUCT_NUMBER, PRODUCT_SIZE)
-    VALUES (#{productNumber},#{productSize})
+    INSERT INTO TBL_PRODUCT_SIZE(PRODUCT_NUMBER, PRODUCT_SIZES)
+    VALUES (#{productNumber},#{productSizes})
+    </insert>
+
+    <insert id="insertColor">
+    INSERT INTO TBL_PRODUCT_COLOR(PRODUCT_NUMBER, PRODUCT_COLORS)
+    VALUES (#{productNumber},#{productColors})
     </insert>
 
 
 <!-- 상품 번호에 맞는 상세 페이지 select -->
+<!--    <select id="selectProduct" resultType="productVo">-->
+<!--        SELECT P.PRODUCT_NUMBER, CATEGORY_MAJOR_CODE, CATEGORY_MINOR_CODE, PRODUCT_NAME, PRODUCT_PRICE,-->
+<!--               DISCOUNT_RATE, DISCOUNT_PRICE, PRODUCT_EXPLANATION, PRODUCT_QUANTITY,-->
+<!--               PRODUCT_REGISTER_DATE, PRODUCT_EXPLANATION1, PRODUCT_EXPLANATION2,-->
+<!--               PS.PRODUCT_SIZES,-->
+<!--               PC.PRODUCT_COLORS,-->
+<!--               U.USER_ID, U.USER_NUMBER,-->
+<!--               F.FILE_UPLOAD_PATH, F.FILE_UUID, F.FILE_NAME-->
+<!--        FROM TBL_PRODUCT P-->
+<!--                 JOIN TBL_USER U ON P.USER_NUMBER =U.USER_NUMBER-->
+<!--                 JOIN TBL_FILE F ON F.PRODUCT_NUMBER=P.PRODUCT_NUMBER-->
+<!--                 JOIN TBL_PRODUCT_SIZE PS ON F.PRODUCT_NUMBER=PS.PRODUCT_NUMBER-->
+<!--                 JOIN TBL_PRODUCT_COLOR PC ON F.PRODUCT_NUMBER=PC.PRODUCT_NUMBER-->
+<!--        WHERE P.PRODUCT_NUMBER=#{productNumber}-->
+<!--    </select>-->
+
     <select id="selectProduct" resultType="productVo">
         SELECT P.PRODUCT_NUMBER, CATEGORY_MAJOR_CODE, CATEGORY_MINOR_CODE, PRODUCT_NAME, PRODUCT_PRICE,
-               PRODUCT_COLOR, DISCOUNT_RATE, DISCOUNT_PRICE, PRODUCT_EXPLANATION, PRODUCT_QUANTITY,
-               PRODUCT_SIZE, PRODUCT_REGISTER_DATE, PRODUCT_EXPLANATION1, PRODUCT_EXPLANATION2,
-               U.USER_ID, U.USER_NUMBER,
-               F.FILE_UPLOAD_PATH, F.FILE_UUID, F.FILE_NAME
+               DISCOUNT_RATE, DISCOUNT_PRICE, PRODUCT_EXPLANATION, PRODUCT_QUANTITY,
+               PRODUCT_REGISTER_DATE, PRODUCT_EXPLANATION1, PRODUCT_EXPLANATION2,
+               LISTAGG(PS.PRODUCT_SIZES, ',') WITHIN GROUP (ORDER BY PS.PRODUCT_SIZES) AS PRODUCT_SIZES,
+           LISTAGG(PC.PRODUCT_COLORS, ',') WITHIN GROUP (ORDER BY PC.PRODUCT_COLORS) AS PRODUCT_COLORS,
+            U.USER_ID, U.USER_NUMBER,
+            F.FILE_UPLOAD_PATH, F.FILE_UUID, F.FILE_NAME
         FROM TBL_PRODUCT P
-        JOIN TBL_USER U ON P.USER_NUMBER =U.USER_NUMBER
-        JOIN TBL_FILE F ON F.PRODUCT_NUMBER=P.PRODUCT_NUMBER
-        WHERE P.PRODUCT_NUMBER=#{productNumber}
+            JOIN TBL_USER U ON P.USER_NUMBER = U.USER_NUMBER
+            JOIN TBL_FILE F ON F.PRODUCT_NUMBER = P.PRODUCT_NUMBER
+            JOIN TBL_PRODUCT_SIZE PS ON F.PRODUCT_NUMBER = PS.PRODUCT_NUMBER
+            JOIN TBL_PRODUCT_COLOR PC ON F.PRODUCT_NUMBER = PC.PRODUCT_NUMBER
+        WHERE P.PRODUCT_NUMBER = #{productNumber}
+        GROUP BY P.PRODUCT_NUMBER, CATEGORY_MAJOR_CODE, CATEGORY_MINOR_CODE, PRODUCT_NAME, PRODUCT_PRICE,
+            DISCOUNT_RATE, DISCOUNT_PRICE, PRODUCT_EXPLANATION, PRODUCT_QUANTITY,
+            PRODUCT_REGISTER_DATE, PRODUCT_EXPLANATION1, PRODUCT_EXPLANATION2,
+            U.USER_ID, U.USER_NUMBER,
+            F.FILE_UPLOAD_PATH, F.FILE_UUID, F.FILE_NAME
     </select>
 
+<!--    <select id="selectAllProduct" resultType="productVo">-->
+<!--        SELECT PRODUCT_NUMBER, CATEGORY_MAJOR_CODE, CATEGORY_MINOR_CODE, PRODUCT_NAME, PRODUCT_PRICE,-->
+<!--               PRODUCT_COLOR, DISCOUNT_RATE, DISCOUNT_PRICE, PRODUCT_EXPLANATION, PRODUCT_QUANTITY,-->
+<!--               PRODUCT_SIZE, PRODUCT_REGISTER_DATE, PRODUCT_EXPLANATION1, PRODUCT_EXPLANATION2,-->
+<!--               USER_ID, USER_NUMBER,-->
+<!--               FILE_UPLOAD_PATH, FILE_UUID, FILE_NAME-->
+<!--        FROM (-->
+<!--                 SELECT P.PRODUCT_NUMBER, P.CATEGORY_MAJOR_CODE, P.CATEGORY_MINOR_CODE, P.PRODUCT_NAME, P.PRODUCT_PRICE,-->
+<!--                        P.PRODUCT_COLOR, P.DISCOUNT_RATE, P.DISCOUNT_PRICE, P.PRODUCT_EXPLANATION, P.PRODUCT_QUANTITY,-->
+<!--                        P.PRODUCT_SIZE, P.PRODUCT_REGISTER_DATE, P.PRODUCT_EXPLANATION1, P.PRODUCT_EXPLANATION2,-->
+<!--                        U.USER_NUMBER, U.USER_ID,-->
+<!--                        F.FILE_UPLOAD_PATH, F.FILE_UUID, F.FILE_NAME-->
+<!--                 FROM TBL_USER U-->
+<!--                          JOIN TBL_PRODUCT P ON U.USER_NUMBER = P.USER_NUMBER-->
+<!--                          LEFT JOIN (-->
+<!--                     SELECT FILE_NUMBER, FILE_UPLOAD_PATH, FILE_UUID, FILE_NAME, PRODUCT_NUMBER-->
+<!--                     FROM (-->
+<!--                              SELECT FILE_NUMBER, FILE_UPLOAD_PATH, FILE_UUID, FILE_NAME, PRODUCT_NUMBER,-->
+<!--                                     RANK() OVER(PARTITION BY PRODUCT_NUMBER ORDER BY FILE_NUMBER) RK-->
+<!--                              FROM TBL_FILE-->
+<!--                          )-->
+<!--                     WHERE RK = 1-->
+<!--                 ) F ON P.PRODUCT_NUMBER = F.PRODUCT_NUMBER-->
+<!--             )-->
+<!--        ORDER BY PRODUCT_NUMBER DESC-->
+<!--    </select>-->
 
-    <select id="selectAllProduct" resultType="productVo">
-        SELECT PRODUCT_NUMBER, CATEGORY_MAJOR_CODE, CATEGORY_MINOR_CODE, PRODUCT_NAME, PRODUCT_PRICE,
-               PRODUCT_COLOR, DISCOUNT_RATE, DISCOUNT_PRICE, PRODUCT_EXPLANATION, PRODUCT_QUANTITY,
-               PRODUCT_SIZE, PRODUCT_REGISTER_DATE, PRODUCT_EXPLANATION1, PRODUCT_EXPLANATION2,
-               USER_ID, USER_NUMBER,
-               FILE_UPLOAD_PATH, FILE_UUID, FILE_NAME
-        FROM (
-                 SELECT P.PRODUCT_NUMBER, P.CATEGORY_MAJOR_CODE, P.CATEGORY_MINOR_CODE, P.PRODUCT_NAME, P.PRODUCT_PRICE,
-                        P.PRODUCT_COLOR, P.DISCOUNT_RATE, P.DISCOUNT_PRICE, P.PRODUCT_EXPLANATION, P.PRODUCT_QUANTITY,
-                        P.PRODUCT_SIZE, P.PRODUCT_REGISTER_DATE, P.PRODUCT_EXPLANATION1, P.PRODUCT_EXPLANATION2,
-                        U.USER_NUMBER, U.USER_ID,
-                        F.FILE_UPLOAD_PATH, F.FILE_UUID, F.FILE_NAME
-                 FROM TBL_USER U
-                          JOIN TBL_PRODUCT P ON U.USER_NUMBER = P.USER_NUMBER
-                          LEFT JOIN (
-                     SELECT FILE_NUMBER, FILE_UPLOAD_PATH, FILE_UUID, FILE_NAME, PRODUCT_NUMBER
-                     FROM (
-                              SELECT FILE_NUMBER, FILE_UPLOAD_PATH, FILE_UUID, FILE_NAME, PRODUCT_NUMBER,
-                                     RANK() OVER(PARTITION BY PRODUCT_NUMBER ORDER BY FILE_NUMBER) RK
-                              FROM TBL_FILE
-                          )
-                     WHERE RK = 1
-                 ) F ON P.PRODUCT_NUMBER = F.PRODUCT_NUMBER
-             )
-        ORDER BY PRODUCT_NUMBER DESC
+<!--    <select id="selectAllProduct" resultType="productVo">-->
+<!--        SELECT PRODUCT_NUMBER, CATEGORY_MAJOR_CODE, CATEGORY_MINOR_CODE, PRODUCT_NAME, PRODUCT_PRICE,-->
+<!--               PRODUCT_COLOR, DISCOUNT_RATE, DISCOUNT_PRICE, PRODUCT_EXPLANATION, PRODUCT_QUANTITY,-->
+<!--               PRODUCT_SIZES, PRODUCT_REGISTER_DATE, PRODUCT_EXPLANATION1, PRODUCT_EXPLANATION2,-->
+<!--               USER_ID, USER_NUMBER,-->
+<!--               FILE_UPLOAD_PATH, FILE_UUID, FILE_NAME-->
+<!--        FROM (-->
+<!--                 SELECT P.PRODUCT_NUMBER, P.CATEGORY_MAJOR_CODE, P.CATEGORY_MINOR_CODE, P.PRODUCT_NAME, P.PRODUCT_PRICE,-->
+<!--                        P.PRODUCT_COLOR, P.DISCOUNT_RATE, P.DISCOUNT_PRICE, P.PRODUCT_EXPLANATION, P.PRODUCT_QUANTITY,-->
+<!--                        PS.PRODUCT_SIZES, P.PRODUCT_REGISTER_DATE, P.PRODUCT_EXPLANATION1, P.PRODUCT_EXPLANATION2,-->
+<!--                        U.USER_NUMBER, U.USER_ID,-->
+<!--                        F.FILE_UPLOAD_PATH, F.FILE_UUID, F.FILE_NAME-->
+<!--                 FROM TBL_USER U-->
+<!--                          JOIN TBL_PRODUCT P ON U.USER_NUMBER = P.USER_NUMBER-->
+<!--                          JOIN TBL_PRODUCT_SIZE PS ON P.PRODUCT_NUMBER=PS.PRODUCT_NUMBER-->
+<!--                          LEFT JOIN (-->
+<!--                     SELECT FILE_NUMBER, FILE_UPLOAD_PATH, FILE_UUID, FILE_NAME, PRODUCT_NUMBER-->
+<!--                     FROM (-->
+<!--                              SELECT FILE_NUMBER, FILE_UPLOAD_PATH, FILE_UUID, FILE_NAME, PRODUCT_NUMBER,-->
+<!--                                     RANK() OVER(PARTITION BY PRODUCT_NUMBER ORDER BY FILE_NUMBER) RK-->
+<!--                              FROM TBL_FILE-->
+<!--                          )-->
+<!--                     WHERE RK = 1-->
+<!--                 ) F ON P.PRODUCT_NUMBER = F.PRODUCT_NUMBER-->
+<!--             )-->
+<!--        ORDER BY PRODUCT_NUMBER DESC-->
+<!--    </select>  -->
+<!--    -->
+
+<!--    <select id="selectAllProduct" resultType="productVo">-->
+<!--        SELECT P.PRODUCT_NUMBER, P.CATEGORY_MAJOR_CODE, P.CATEGORY_MINOR_CODE, P.PRODUCT_NAME, P.PRODUCT_PRICE,-->
+<!--               P.PRODUCT_COLOR, P.DISCOUNT_RATE, P.DISCOUNT_PRICE, P.PRODUCT_EXPLANATION, P.PRODUCT_QUANTITY,-->
+<!--               LISTAGG(PS.PRODUCT_SIZES, ',') WITHIN GROUP (ORDER BY PS.PRODUCT_SIZES) AS PRODUCT_SIZES,-->
+<!--       P.PRODUCT_REGISTER_DATE, P.PRODUCT_EXPLANATION1, P.PRODUCT_EXPLANATION2,-->
+<!--       U.USER_NUMBER, U.USER_ID,-->
+<!--       F.FILE_UPLOAD_PATH, F.FILE_UUID, F.FILE_NAME, F.FILE_NUMBER-->
+<!--        FROM TBL_USER U-->
+<!--            JOIN TBL_PRODUCT P ON U.USER_NUMBER = P.USER_NUMBER-->
+<!--            JOIN TBL_PRODUCT_SIZE PS ON P.PRODUCT_NUMBER = PS.PRODUCT_NUMBER-->
+<!--            LEFT JOIN (-->
+<!--            SELECT FILE_NUMBER, FILE_UPLOAD_PATH, FILE_UUID, FILE_NAME, PRODUCT_NUMBER-->
+<!--            FROM (-->
+<!--            SELECT FILE_NUMBER, FILE_UPLOAD_PATH, FILE_UUID, FILE_NAME, PRODUCT_NUMBER,-->
+<!--            RANK() OVER(PARTITION BY PRODUCT_NUMBER ORDER BY FILE_NUMBER) RK-->
+<!--            FROM TBL_FILE-->
+<!--            )-->
+<!--            WHERE RK = 1-->
+<!--            ) F ON P.PRODUCT_NUMBER = F.PRODUCT_NUMBER-->
+<!--        GROUP BY P.PRODUCT_NUMBER, P.CATEGORY_MAJOR_CODE, P.CATEGORY_MINOR_CODE, P.PRODUCT_NAME, P.PRODUCT_PRICE,-->
+<!--            P.PRODUCT_COLOR, P.DISCOUNT_RATE, P.DISCOUNT_PRICE, P.PRODUCT_EXPLANATION, P.PRODUCT_QUANTITY,-->
+<!--            P.PRODUCT_REGISTER_DATE, P.PRODUCT_EXPLANATION1, P.PRODUCT_EXPLANATION2,-->
+<!--            U.USER_NUMBER, U.USER_ID,-->
+<!--            F.FILE_UPLOAD_PATH, F.FILE_UUID, F.FILE_NAME, F.FILE_NUMBER-->
+<!--        ORDER BY P.PRODUCT_NUMBER DESC-->
+<!--    </select>-->
+
+
+ <select id="selectAllProduct" resultType="productVo">
+     SELECT P.PRODUCT_NUMBER, P.CATEGORY_MAJOR_CODE, P.CATEGORY_MINOR_CODE, P.PRODUCT_NAME, P.PRODUCT_PRICE,
+            P.DISCOUNT_RATE, P.DISCOUNT_PRICE, P.PRODUCT_EXPLANATION, P.PRODUCT_QUANTITY,
+            LISTAGG(PS.PRODUCT_SIZES, ',') WITHIN GROUP (ORDER BY PS.PRODUCT_SIZES) AS PRODUCT_SIZES,
+       LISTAGG(PC.PRODUCT_COLORS, ',') WITHIN GROUP (ORDER BY PC.PRODUCT_COLORS) AS PRODUCT_COLORS,
+         P.PRODUCT_REGISTER_DATE, P.PRODUCT_EXPLANATION1, P.PRODUCT_EXPLANATION2,
+         U.USER_NUMBER, U.USER_ID,
+         F.FILE_UPLOAD_PATH, F.FILE_UUID, F.FILE_NAME, F.FILE_NUMBER
+     FROM TBL_USER U
+         JOIN TBL_PRODUCT P ON U.USER_NUMBER = P.USER_NUMBER
+         JOIN TBL_PRODUCT_SIZE PS ON P.PRODUCT_NUMBER = PS.PRODUCT_NUMBER
+         JOIN TBL_PRODUCT_COLOR PC ON P.PRODUCT_NUMBER = PC.PRODUCT_NUMBER
+         LEFT JOIN (
+         SELECT FILE_NUMBER, FILE_UPLOAD_PATH, FILE_UUID, FILE_NAME, PRODUCT_NUMBER
+         FROM (
+         SELECT FILE_NUMBER, FILE_UPLOAD_PATH, FILE_UUID, FILE_NAME, PRODUCT_NUMBER,
+         RANK() OVER(PARTITION BY PRODUCT_NUMBER ORDER BY FILE_NUMBER) RK
+         FROM TBL_FILE
+         )
+         WHERE RK = 1
+         ) F ON P.PRODUCT_NUMBER = F.PRODUCT_NUMBER
+     GROUP BY P.PRODUCT_NUMBER, P.CATEGORY_MAJOR_CODE, P.CATEGORY_MINOR_CODE, P.PRODUCT_NAME, P.PRODUCT_PRICE,
+         P.DISCOUNT_RATE, P.DISCOUNT_PRICE, P.PRODUCT_EXPLANATION, P.PRODUCT_QUANTITY,
+         P.PRODUCT_REGISTER_DATE, P.PRODUCT_EXPLANATION1, P.PRODUCT_EXPLANATION2,
+         U.USER_NUMBER, U.USER_ID,
+         F.FILE_UPLOAD_PATH, F.FILE_UUID, F.FILE_NAME, F.FILE_NUMBER
+     ORDER BY P.PRODUCT_NUMBER DESC
     </select>
 
 
@@ -65,6 +191,11 @@
         WHERE PRODUCT_NUMBER = #{productNumber}
     </delete>
 
+
+    <delete id="sizeDelete">
+        DELETE from TBL_PRODUCT_SIZE
+        WHERE PRODUCT_NUMBER = #{productNumber}
+    </delete>
 
     <update id="updateProduct">
     UPDATE TBL_PRODUCT

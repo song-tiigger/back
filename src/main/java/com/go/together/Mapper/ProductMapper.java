@@ -17,6 +17,8 @@ public interface ProductMapper {
 //    사이즈 등록
     public int insertSize(Map<String , Object> paraMap);
 
+    public int insertColor(Map<String , Object> colorParamMap);
+
 //    게시글 VIEW
     public List<ProductVo> selectProduct(Long productNumber);
 
@@ -25,6 +27,8 @@ public interface ProductMapper {
 
 
     public int delete(Long productNumber);
+
+    public int sizeDelete(Long productNumber);
 
     public void updateProduct(ProductDto productDto);
 

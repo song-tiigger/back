@@ -29,6 +29,7 @@ public class ProductDto {
     private int productQuantity;
     private String productSize;
     private List<String> productSizes;
+    private List<String> productColors;
     private Date productRegisterDate;
     private String userId;
 }

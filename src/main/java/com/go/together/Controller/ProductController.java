@@ -25,7 +25,7 @@ public class ProductController {
     private final FileService fileService;
 
     @PostMapping("/registerProduct")
-    public int registerProduct(ProductDto productDto, @RequestPart("productFile") List<MultipartFile> files) {
+    public int registerProduct( ProductDto productDto, @RequestPart("productFile") List<MultipartFile> files) {
         int result = productService.registerProduct(productDto);
         System.out.println(productDto + "상품 입력 값 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
 
@@ -74,37 +74,6 @@ public class ProductController {
         System.out.println(result + "1이 나오면 성공");
         return result;
     }
-
-
-//@PostMapping("/productDelete")
-//public List<Integer> productDelete(@RequestBody List<Long> productNumbers) {
-//        List<Integer> results = new ArrayList<>();
-//
-//
-//
-////    for(int i = 0; i < productNumbers.size(); i++){
-////        Long productNumber = productNumbers.get(i); 아래와 같은거임.,
-//        for(Long productNumber : productNumbers){
-//            int result = productService.remove(productNumber);
-//            results.add(result);
-//        }
-//        System.out.println(results+ " 1이 나오면 성공 ");
-//        return results;
-//}
-//
-//    @PostMapping("/productDelete")
-//    public List<Integer> productDelete(@RequestBody Map<String, List<Long>> ArrayProductNumber) {
-//        List<Long> productNumbers = ArrayProductNumber.get("productNumber");
-//        List<Integer> results = new ArrayList<>();
-//
-//        for(Long productNumber : productNumbers){
-//            int result = productService.remove(productNumber);
-//            results.add(result);
-//        }
-//
-//        System.out.println(results + " 여러 배열의 결과값이 나옴!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! ");
-//        return results;
-//    }
 
     @PostMapping("/productDelete")
     public Map<Long, Integer> productDelete(@RequestBody Map<String, List<Long>> ArrayProductNumber) {
