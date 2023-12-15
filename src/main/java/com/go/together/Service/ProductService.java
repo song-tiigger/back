@@ -97,6 +97,7 @@ public class ProductService {
         }
         fileMapper.delete(productNumber);
         productMapper.sizeDelete(productNumber);
+        productMapper.colorDelete(productNumber);
         return productMapper.delete(productNumber);
     }
 
