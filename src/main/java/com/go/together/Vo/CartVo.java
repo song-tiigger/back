@@ -17,8 +17,10 @@ public class CartVo {
     private long productNumber;
     private int cartCount;
     private String productName;
-    private String productColor;
-    private String productSize;
+//    private String productColor;
+    private String selectedColor;
+//    private String productSize;
+    private String selectedSize;
     private int productQuantity;
     private Double productPrice;
     private Double totalPrice;

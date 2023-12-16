@@ -12,16 +12,16 @@ public interface CartMapper {
     public int insertCart(CartVo cartVo);
 
     //   유저 넘버에 해당하는 장바구니 조회
-    public List<CartVo> userCartList(int userNumber);
+    public List<CartVo> userCartList(Integer userNumber);
 
     //    장바구니 수량 증가
-    public int addCart(CartVo cartVo);
-
-    //    장바구니 수량 변경
-    public int updateCartPlus(CartVo cartVo);
+    public int addCart(Long cartNumber);
 
     //    장바구니 수량 감소
-    public int minusCart(CartVo cartVo);
+    public int minusCart(Long cartNumber);
+
+    //    장바구니 수량 변경
+    public int changeCartCount(CartVo cartVo);
 
     //    장바구니 상품 삭제
     public int deleteCart(Long cartNumber);
