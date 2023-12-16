@@ -143,7 +143,6 @@ public class UserService {
     }
 
 
-
 //    유저 모든 정보 리스트로 가져오기
 public UserDto getUserList(UserDto userDto){
     if (userDto ==null){
@@ -152,49 +151,6 @@ public UserDto getUserList(UserDto userDto){
     return Optional.ofNullable(userMapper.userListAll(userDto))
             .orElseThrow(() -> new IllegalArgumentException("회원번호가 없습니다"));
 }
-
-
-
-
-
-
-////이메일 인증
-//public void checkEmail(UserDto userDto){
-//    UserDto existingUser = userMapper.userListAll(userDto);
-//    if (existingUser == null) {
-//        throw new IllegalArgumentException("해당하는 회원 정보가 없습니다.");
-//    }
-//
-//
-//    if(!existingUser.getUserEmail().equals(userDto.getUserEmail())){
-//        throw new IllegalArgumentException("입력한 이메일과 회원의 이메일 일치 X");
-//    }
-//
-//    // 사용자 정보에서 이메일을 가져와 userDto에 설정합니다.
-//    userDto.setUserEmail(existingUser.getUserEmail());
-//    String randomCode = Util.generateRandomString();
-//    userDto.setVerificationCode(randomCode);
-//    userMapper.saveVerificationCode(userDto);
-//
-//
-//        try {
-//            MailUtil.Send(userDto.getUserEmail(),randomCode, myEmail, myPw ,userDto);
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//            // 예외 처리 로직 추가
-//        }
-//    }
-//
-//
-//
-//
-//    public void verifyCode(UserDto userDto) {
-//        UserDto existingUser = userMapper.userListAll(userDto);
-//        if(!existingUser.getVerificationCode().equals(userDto.getVerificationCode())){
-//            throw new IllegalArgumentException("코드 입력한게 서로달라요");
-//        }
-//    }
-//
 
 
     public int checkEmail(UserDto userDto) {
@@ -230,23 +186,6 @@ public UserDto getUserList(UserDto userDto){
 
         return 100;
     }
-
-//    public void checkRandomNumber(UserDto userDto) {
-//
-//        UserDto code =userDto.getVerificationCode();
-//        if (!code.equals(userDto.getVerificationCode())) {
-//            throw new IllegalArgumentException("일치하는 코드가 아닙니다");
-//        }
-//        String randomCode = Util.generateRandomString();
-//        userDto.setVerificationCode(randomCode);
-//    }
-
-
-//    private void setVerificationCode(UserDto userDto) {
-//        String randomCode = Util.generateRandomString();
-//        userDto.setVerificationCode(randomCode);
-//    }
-
 
 }
 

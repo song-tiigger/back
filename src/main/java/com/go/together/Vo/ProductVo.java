@@ -20,7 +20,6 @@ public class ProductVo {
     private String productColor;
     private Double productPrice;
     private Double discountRate; // 추가: 할인율
-    //    private Double discountPrice; // 추가: 할인가
     private String productExplanation;
     private String productExplanation1;
     private String productExplanation2;
