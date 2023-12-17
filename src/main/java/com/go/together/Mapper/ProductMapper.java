@@ -12,12 +12,14 @@ import java.util.Map;
 public interface ProductMapper {
 
 //    게시글 등록
-    public int insertProduct(ProductDto productDto);
+    public int insertProduct(ProductVo productVo);
+
 
 //    사이즈 등록
     public int insertSize(Map<String , Object> paraMap);
 
     public int insertColor(Map<String , Object> colorParamMap);
+
 
 //    게시글 VIEW
     public List<ProductVo> selectProduct(Long productNumber);

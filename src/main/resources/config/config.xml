@@ -11,4 +11,10 @@
         <typeAlias type="com.go.together.Vo.CartVo" alias="cartVo"/>
         <typeAlias type="com.go.together.Vo.LikeVo" alias="likeVo"/>
     </typeAliases>
+
+
+    <typeHandlers>
+        <typeHandler handler="com.go.together.Util.StringListTypeHandler"/>
+    </typeHandlers>
+
 </configuration>

@@ -85,6 +85,29 @@
     </update>
 
 
+    <update id="changeColor">
+        UPDATE TBL_CART
+        SET SELECTED_SIZE = #{selectedSize}
+        WHERE CART_NUMBER = #{cartNumber}
+    </update>
+    <update id="changeSize">
+        UPDATE TBL_CART
+        SET SELECTED_COLOR = #{selectedColor}
+        WHERE CART_NUMBER = #{cartNumber}
+    </update>
+
+
+<select id="cartUserNumberTotalPrice">
+
+    SELECT U.USER_NUMBER,
+           SUM(P.PRODUCT_PRICE * C.CART_COUNT) AS TOTAL_PRICE
+    FROM TBL_USER U
+             JOIN TBL_CART C ON U.USER_NUMBER = C.USER_NUMBER
+             JOIN TBL_PRODUCT P ON P.PRODUCT_NUMBER = C.PRODUCT_NUMBER
+    WHERE C.USER_NUMBER =#{userNumber}
+    GROUP BY U.USER_NUMBER
+</select>
+
 
     <!--    장바구니 상품 삭제-->
     <delete id="deleteCart">

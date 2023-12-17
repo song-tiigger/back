@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 public class CartDto {
 
     private long cartNumber;
-    private long userNumber;
+    private int userNumber;
     private long productNumber;
     private int cartCount;
 

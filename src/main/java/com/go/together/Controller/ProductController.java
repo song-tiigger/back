@@ -25,13 +25,13 @@ public class ProductController {
     private final FileService fileService;
 
     @PostMapping("/registerProduct")
-    public int registerProduct( ProductDto productDto, @RequestPart("productFile") List<MultipartFile> files) {
-        int result = productService.registerProduct(productDto);
-        System.out.println(productDto + "상품 입력 값 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+    public int registerProduct( ProductVo productVo, @RequestPart("productFile") List<MultipartFile> files) {
+        int result = productService.registerProduct(productVo);
+        System.out.println(productVo + "상품 입력 값 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
 
         if (files != null) {
             try {
-                fileService.registerAndSaveFiles(files, productDto.getProductNumber());
+                fileService.registerAndSaveFiles(files, productVo.getProductNumber());
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -60,6 +60,8 @@ public class ProductController {
         List<ProductVo> result =productService.findOneProduct(productNumber);
         System.out.println(productNumber + "상품 번호확인 !!!");
 
+
+        System.out.println(result);
         return result;
 
     }

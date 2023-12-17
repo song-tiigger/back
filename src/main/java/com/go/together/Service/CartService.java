@@ -36,6 +36,18 @@ public class CartService {
         return cartMapper.userCartList(userNumber);
     }
 
+//    유저의 모든 가격
+    public CartVo cartAllPrice(Integer userNumber){
+        if(userNumber== null){
+            throw new IllegalArgumentException("사용자 번호가없어요!");
+        }
+        CartVo res=cartMapper.cartUserNumberTotalPrice(userNumber);
+
+        return res;
+    }
+
+
+
     public int upCount(Long cartNumber) {
         return cartMapper.addCart(cartNumber);
     }

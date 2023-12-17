@@ -2,16 +2,6 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.go.together.Mapper.ProductMapper">
 
-<!--    <insert id="insertProduct">-->
-<!--        <selectKey keyProperty="productNumber" order="BEFORE" resultType="long">-->
-<!--            SELECT SEQ_PRODUCT.NEXTVAL FROM DUAL-->
-<!--        </selectKey>-->
-<!--        INSERT INTO TBL_PRODUCT (PRODUCT_NUMBER,CATEGORY_MAJOR_CODE, CATEGORY_MINOR_CODE, PRODUCT_NAME, PRODUCT_COLOR, PRODUCT_PRICE, DISCOUNT_RATE,-->
-<!--                                 PRODUCT_EXPLANATION,PRODUCT_EXPLANATION1,PRODUCT_EXPLANATION2, PRODUCT_QUANTITY,PRODUCT_REGISTER_DATE,USER_ID,USER_NUMBER)-->
-<!--        VALUES (#{productNumber}, #{categoryMajorCode},#{categoryMinorCode}, #{productName}, #{productColor}, #{productPrice}, #{discountRate},-->
-<!--          #{productExplanation}, #{productExplanation1}, #{productExplanation2}, #{productQuantity},SYSDATE,#{userId},#{userNumber})-->
-<!--    </insert>-->
-
   <insert id="insertProduct">
         <selectKey keyProperty="productNumber" order="BEFORE" resultType="long">
             SELECT SEQ_PRODUCT.NEXTVAL FROM DUAL
@@ -32,59 +22,6 @@
     INSERT INTO TBL_PRODUCT_COLOR(PRODUCT_NUMBER, PRODUCT_COLORS)
     VALUES (#{productNumber},#{productColors})
     </insert>
-
-
-<!-- 상품 번호에 맞는 상세 페이지 select -->
-<!--    <select id="selectProduct" resultType="productVo">-->
-<!--        SELECT P.PRODUCT_NUMBER, CATEGORY_MAJOR_CODE, CATEGORY_MINOR_CODE, PRODUCT_NAME, PRODUCT_PRICE,-->
-<!--               DISCOUNT_RATE, DISCOUNT_PRICE, PRODUCT_EXPLANATION, PRODUCT_QUANTITY,-->
-<!--               PRODUCT_REGISTER_DATE, PRODUCT_EXPLANATION1, PRODUCT_EXPLANATION2,-->
-<!--               PS.PRODUCT_SIZES,-->
-<!--               PC.PRODUCT_COLORS,-->
-<!--               U.USER_ID, U.USER_NUMBER,-->
-<!--               F.FILE_UPLOAD_PATH, F.FILE_UUID, F.FILE_NAME-->
-<!--        FROM TBL_PRODUCT P-->
-<!--                 JOIN TBL_USER U ON P.USER_NUMBER =U.USER_NUMBER-->
-<!--                 JOIN TBL_FILE F ON F.PRODUCT_NUMBER=P.PRODUCT_NUMBER-->
-<!--                 JOIN TBL_PRODUCT_SIZE PS ON F.PRODUCT_NUMBER=PS.PRODUCT_NUMBER-->
-<!--                 JOIN TBL_PRODUCT_COLOR PC ON F.PRODUCT_NUMBER=PC.PRODUCT_NUMBER-->
-<!--        WHERE P.PRODUCT_NUMBER=#{productNumber}-->
-<!--    </select>-->
-
-<!--    <select id="selectProduct" resultType="productVo">-->
-<!--        SELECT P.PRODUCT_NUMBER, CATEGORY_MAJOR_CODE, CATEGORY_MINOR_CODE, PRODUCT_NAME, PRODUCT_PRICE,-->
-<!--               DISCOUNT_RATE, DISCOUNT_PRICE, PRODUCT_EXPLANATION, PRODUCT_QUANTITY,-->
-<!--               PRODUCT_REGISTER_DATE, PRODUCT_EXPLANATION1, PRODUCT_EXPLANATION2,-->
-<!--               LISTAGG(PS.PRODUCT_SIZES, ',') WITHIN GROUP (ORDER BY PS.PRODUCT_SIZES) AS PRODUCT_SIZES,-->
-<!--           LISTAGG(PC.PRODUCT_COLORS, ',') WITHIN GROUP (ORDER BY PC.PRODUCT_COLORS) AS PRODUCT_COLORS,-->
-<!--            U.USER_ID, U.USER_NUMBER,-->
-<!--            F.FILE_UPLOAD_PATH, F.FILE_UUID, F.FILE_NAME-->
-<!--        FROM TBL_PRODUCT P-->
-<!--            JOIN TBL_USER U ON P.USER_NUMBER = U.USER_NUMBER-->
-<!--            JOIN TBL_FILE F ON F.PRODUCT_NUMBER = P.PRODUCT_NUMBER-->
-<!--            JOIN (-->
-<!--            SELECT-->
-<!--            PRODUCT_NUMBER,-->
-<!--            LISTAGG(PRODUCT_SIZES, ',') WITHIN GROUP (ORDER BY PRODUCT_SIZES) AS PRODUCT_SIZES-->
-<!--            FROM  TBL_PRODUCT_SIZE-->
-<!--            GROUP BY PRODUCT_NUMBER-->
-<!--            ) PS ON P.PRODUCT_NUMBER = PS.PRODUCT_NUMBER-->
-<!--            JOIN (-->
-<!--            SELECT-->
-<!--            PRODUCT_NUMBER,-->
-<!--            LISTAGG(PRODUCT_COLORS, ',') WITHIN GROUP (ORDER BY PRODUCT_COLORS) AS PRODUCT_COLORS-->
-<!--            FROM-->
-<!--            TBL_PRODUCT_COLOR-->
-<!--            GROUP BY-->
-<!--            PRODUCT_NUMBER-->
-<!--            ) PC ON P.PRODUCT_NUMBER = PC.PRODUCT_NUMBER-->
-<!--        WHERE P.PRODUCT_NUMBER = #{productNumber}-->
-<!--        GROUP BY P.PRODUCT_NUMBER, CATEGORY_MAJOR_CODE, CATEGORY_MINOR_CODE, PRODUCT_NAME, PRODUCT_PRICE,-->
-<!--            DISCOUNT_RATE, DISCOUNT_PRICE, PRODUCT_EXPLANATION, PRODUCT_QUANTITY,-->
-<!--            PRODUCT_REGISTER_DATE, PRODUCT_EXPLANATION1, PRODUCT_EXPLANATION2,-->
-<!--            U.USER_ID, U.USER_NUMBER,-->
-<!--            F.FILE_UPLOAD_PATH, F.FILE_UUID, F.FILE_NAME-->
-<!--    </select>-->
 
 
 
@@ -114,89 +51,117 @@
             GROUP BY
             PRODUCT_NUMBER
             ) PC ON P.PRODUCT_NUMBER = PC.PRODUCT_NUMBER
-        WHERE P.PRODUCT_NUMBER =#{productNumber}
+        WHERE P.PRODUCT_NUMBER = #{productNumber}
         GROUP BY P.PRODUCT_NUMBER, P.CATEGORY_MAJOR_CODE, P.CATEGORY_MINOR_CODE, P.PRODUCT_NAME, P.PRODUCT_PRICE,
             P.DISCOUNT_RATE, P.PRODUCT_EXPLANATION, P.PRODUCT_QUANTITY, P.PRODUCT_REGISTER_DATE,
             P.PRODUCT_EXPLANATION1, P.PRODUCT_EXPLANATION2, U.USER_NUMBER, U.USER_ID, F.FILE_UPLOAD_PATH,
             F.FILE_UUID, F.FILE_NAME, F.FILE_NUMBER
     </select>
-<!-- <select id="selectAllProduct" resultType="productVo">-->
-<!--     SELECT P.PRODUCT_NUMBER, P.CATEGORY_MAJOR_CODE, P.CATEGORY_MINOR_CODE, P.PRODUCT_NAME, P.PRODUCT_PRICE,-->
-<!--            P.DISCOUNT_RATE, P.DISCOUNT_PRICE, P.PRODUCT_EXPLANATION, P.PRODUCT_QUANTITY,-->
-<!--            LISTAGG(PS.PRODUCT_SIZES, ',') WITHIN GROUP (ORDER BY PS.PRODUCT_SIZES) AS PRODUCT_SIZES,-->
-<!--       LISTAGG(PC.PRODUCT_COLORS, ',') WITHIN GROUP (ORDER BY PC.PRODUCT_COLORS) AS PRODUCT_COLORS,-->
-<!--         P.PRODUCT_REGISTER_DATE, P.PRODUCT_EXPLANATION1, P.PRODUCT_EXPLANATION2,-->
-<!--         U.USER_NUMBER, U.USER_ID,-->
-<!--         F.FILE_UPLOAD_PATH, F.FILE_UUID, F.FILE_NAME, F.FILE_NUMBER-->
-<!--     FROM TBL_USER U-->
-<!--         JOIN TBL_PRODUCT P ON U.USER_NUMBER = P.USER_NUMBER-->
-<!--         JOIN TBL_PRODUCT_SIZE PS ON P.PRODUCT_NUMBER = PS.PRODUCT_NUMBER-->
-<!--         JOIN TBL_PRODUCT_COLOR PC ON P.PRODUCT_NUMBER = PC.PRODUCT_NUMBER-->
-<!--         LEFT JOIN (-->
-<!--         SELECT FILE_NUMBER, FILE_UPLOAD_PATH, FILE_UUID, FILE_NAME, PRODUCT_NUMBER-->
-<!--         FROM (-->
-<!--         SELECT FILE_NUMBER, FILE_UPLOAD_PATH, FILE_UUID, FILE_NAME, PRODUCT_NUMBER,-->
-<!--         RANK() OVER(PARTITION BY PRODUCT_NUMBER ORDER BY FILE_NUMBER) RK-->
-<!--         FROM TBL_FILE-->
-<!--         )-->
-<!--         WHERE RK = 1-->
-<!--         ) F ON P.PRODUCT_NUMBER = F.PRODUCT_NUMBER-->
-<!--     GROUP BY P.PRODUCT_NUMBER, P.CATEGORY_MAJOR_CODE, P.CATEGORY_MINOR_CODE, P.PRODUCT_NAME, P.PRODUCT_PRICE,-->
-<!--         P.DISCOUNT_RATE, P.DISCOUNT_PRICE, P.PRODUCT_EXPLANATION, P.PRODUCT_QUANTITY,-->
-<!--         P.PRODUCT_REGISTER_DATE, P.PRODUCT_EXPLANATION1, P.PRODUCT_EXPLANATION2,-->
-<!--         U.USER_NUMBER, U.USER_ID,-->
-<!--         F.FILE_UPLOAD_PATH, F.FILE_UUID, F.FILE_NAME, F.FILE_NUMBER-->
-<!--     ORDER BY P.PRODUCT_NUMBER DESC-->
+
+
+<!--이게 맞는거야 !!-->
+<!--    <select id="selectProduct" resultType="ProductVo">-->
+<!--        SELECT-->
+<!--            P.PRODUCT_NUMBER,-->
+<!--            P.CATEGORY_MAJOR_CODE,-->
+<!--            P.CATEGORY_MINOR_CODE,-->
+<!--            P.PRODUCT_NAME,-->
+<!--            P.PRODUCT_PRICE,-->
+<!--            P.DISCOUNT_RATE,-->
+<!--            (P.PRODUCT_PRICE * (1 - P.DISCOUNT_RATE / 100)) AS DISCOUNT_PRICE,-->
+<!--            P.PRODUCT_EXPLANATION,-->
+<!--            P.PRODUCT_QUANTITY,-->
+<!--            P.PRODUCT_REGISTER_DATE,-->
+<!--            P.PRODUCT_EXPLANATION1,-->
+<!--            P.PRODUCT_EXPLANATION2,-->
+<!--            PS.PRODUCT_SIZES AS PRODUCT_SIZES,-->
+<!--            PC.PRODUCT_COLORS AS PRODUCT_COLORS,-->
+<!--            U.USER_ID,-->
+<!--            U.USER_NUMBER,-->
+<!--            F.FILE_UPLOAD_PATH,-->
+<!--            F.FILE_UUID,-->
+<!--            F.FILE_NAME-->
+<!--        FROM TBL_PRODUCT P-->
+<!--                 JOIN TBL_USER U ON P.USER_NUMBER = U.USER_NUMBER-->
+<!--                 JOIN TBL_FILE F ON F.PRODUCT_NUMBER = P.PRODUCT_NUMBER-->
+<!--                 LEFT JOIN (-->
+<!--            SELECT PRODUCT_NUMBER, LISTAGG(PRODUCT_SIZES, ',') WITHIN GROUP (ORDER BY PRODUCT_SIZES) AS PRODUCT_SIZES-->
+<!--            FROM TBL_PRODUCT_SIZE-->
+<!--            GROUP BY PRODUCT_NUMBER-->
+<!--        ) PS ON P.PRODUCT_NUMBER = PS.PRODUCT_NUMBER-->
+<!--                 LEFT JOIN (-->
+<!--            SELECT PRODUCT_NUMBER, LISTAGG(PRODUCT_COLORS, ',') WITHIN GROUP (ORDER BY PRODUCT_COLORS) AS PRODUCT_COLORS-->
+<!--            FROM TBL_PRODUCT_COLOR-->
+<!--            GROUP BY PRODUCT_NUMBER-->
+<!--        ) PC ON P.PRODUCT_NUMBER = PC.PRODUCT_NUMBER-->
+<!--        WHERE P.PRODUCT_NUMBER = #{productNumber}-->
+<!--        GROUP BY P.PRODUCT_NUMBER, P.CATEGORY_MAJOR_CODE, P.CATEGORY_MINOR_CODE, P.PRODUCT_NAME, P.PRODUCT_PRICE,-->
+<!--                 P.DISCOUNT_RATE, P.PRODUCT_EXPLANATION, P.PRODUCT_QUANTITY, P.PRODUCT_REGISTER_DATE,-->
+<!--                 P.PRODUCT_EXPLANATION1, P.PRODUCT_EXPLANATION2, U.USER_NUMBER, U.USER_ID, F.FILE_UPLOAD_PATH,-->
+<!--                 F.FILE_UUID, F.FILE_NAME, F.FILE_NUMBER, PS.PRODUCT_SIZES, PC.PRODUCT_COLORS-->
+<!--    </select>-->
+<!--    <select id="selectProduct" resultType="productVo">-->
+<!--        SELECT-->
+<!--            P.PRODUCT_NUMBER,-->
+<!--            P.CATEGORY_MAJOR_CODE,-->
+<!--            P.CATEGORY_MINOR_CODE,-->
+<!--            P.PRODUCT_NAME,-->
+<!--            P.PRODUCT_PRICE,-->
+<!--            P.DISCOUNT_RATE,-->
+<!--            (P.PRODUCT_PRICE * (1 - P.DISCOUNT_RATE / 100)) AS DISCOUNT_PRICE,-->
+<!--            P.PRODUCT_EXPLANATION,-->
+<!--            P.PRODUCT_QUANTITY,-->
+<!--            P.PRODUCT_REGISTER_DATE,-->
+<!--            P.PRODUCT_EXPLANATION1,-->
+<!--            P.PRODUCT_EXPLANATION2,-->
+<!--            PS.PRODUCT_SIZES,-->
+<!--            PC.PRODUCT_COLORS,-->
+<!--            U.USER_ID,-->
+<!--            U.USER_NUMBER,-->
+<!--            F.FILE_UPLOAD_PATH,-->
+<!--            F.FILE_UUID,-->
+<!--            F.FILE_NAME-->
+<!--        FROM TBL_PRODUCT P-->
+<!--                 JOIN TBL_USER U ON P.USER_NUMBER = U.USER_NUMBER-->
+<!--                 JOIN TBL_FILE F ON F.PRODUCT_NUMBER = P.PRODUCT_NUMBER-->
+<!--                JOIN TBL_PRODUCT_SIZE PS ON PS.PRODUCT_NUMBER=P.PRODUCT_NUMBER-->
+<!--                JOIN TBL_PRODUCT_COLOR PC ON PC.PRODUCT_NUMBER=P.PRODUCT_NUMBER-->
+<!--        WHERE P.PRODUCT_NUMBER = #{productNumber}-->
 <!--    </select>-->
 
-
-
-
-<!--select 전거임-->
-<!--    <select id="selectAllProduct" resultType="productVo">-->
-<!--     SELECT P.PRODUCT_NUMBER, P.CATEGORY_MAJOR_CODE, P.CATEGORY_MINOR_CODE, P.PRODUCT_NAME, P.PRODUCT_PRICE,-->
-<!--            P.DISCOUNT_RATE, P.DISCOUNT_PRICE, P.PRODUCT_EXPLANATION, P.PRODUCT_QUANTITY,-->
-<!--            LISTAGG(PS.PRODUCT_SIZES, ',') WITHIN GROUP (ORDER BY PS.PRODUCT_SIZES) AS PRODUCT_SIZES,-->
-<!--       LISTAGG(PC.PRODUCT_COLORS, ',') WITHIN GROUP (ORDER BY PC.PRODUCT_COLORS) AS PRODUCT_COLORS,-->
-<!--         P.PRODUCT_REGISTER_DATE, P.PRODUCT_EXPLANATION1, P.PRODUCT_EXPLANATION2,-->
-<!--         U.USER_NUMBER, U.USER_ID,-->
-<!--         F.FILE_UPLOAD_PATH, F.FILE_UUID, F.FILE_NAME, F.FILE_NUMBER-->
-<!--     FROM TBL_USER U-->
-<!--         JOIN TBL_PRODUCT P ON U.USER_NUMBER = P.USER_NUMBER-->
-<!--         JOIN (-->
-<!--         SELECT-->
-<!--         PRODUCT_NUMBER,-->
-<!--         LISTAGG(PRODUCT_SIZES, ',') WITHIN GROUP (ORDER BY PRODUCT_SIZES) AS PRODUCT_SIZES-->
-<!--         FROM  TBL_PRODUCT_SIZE-->
-<!--         GROUP BY PRODUCT_NUMBER-->
-<!--         ) PS ON P.PRODUCT_NUMBER = PS.PRODUCT_NUMBER-->
-<!--         JOIN (-->
-<!--         SELECT-->
-<!--         PRODUCT_NUMBER,-->
-<!--         LISTAGG(PRODUCT_COLORS, ',') WITHIN GROUP (ORDER BY PRODUCT_COLORS) AS PRODUCT_COLORS-->
-<!--         FROM-->
-<!--         TBL_PRODUCT_COLOR-->
-<!--         GROUP BY-->
-<!--         PRODUCT_NUMBER-->
-<!--         ) PC ON P.PRODUCT_NUMBER = PC.PRODUCT_NUMBER-->
-<!--         LEFT JOIN (-->
-<!--         SELECT FILE_NUMBER, FILE_UPLOAD_PATH, FILE_UUID, FILE_NAME, PRODUCT_NUMBER-->
-<!--         FROM (-->
-<!--         SELECT FILE_NUMBER, FILE_UPLOAD_PATH, FILE_UUID, FILE_NAME, PRODUCT_NUMBER,-->
-<!--         RANK() OVER(PARTITION BY PRODUCT_NUMBER ORDER BY FILE_NUMBER) RK-->
-<!--         FROM TBL_FILE-->
-<!--         )-->
-<!--         WHERE RK = 1-->
-<!--         ) F ON P.PRODUCT_NUMBER = F.PRODUCT_NUMBER-->
-<!--     GROUP BY P.PRODUCT_NUMBER, P.CATEGORY_MAJOR_CODE, P.CATEGORY_MINOR_CODE, P.PRODUCT_NAME, P.PRODUCT_PRICE,-->
-<!--         P.DISCOUNT_RATE, P.DISCOUNT_PRICE, P.PRODUCT_EXPLANATION, P.PRODUCT_QUANTITY,-->
-<!--         P.PRODUCT_REGISTER_DATE, P.PRODUCT_EXPLANATION1, P.PRODUCT_EXPLANATION2,-->
-<!--         U.USER_NUMBER, U.USER_ID,-->
-<!--         F.FILE_UPLOAD_PATH, F.FILE_UUID, F.FILE_NAME, F.FILE_NUMBER-->
-<!--     ORDER BY P.PRODUCT_NUMBER DESC-->
-<!--    </select>-->
-
-
+    <select id="classifyMajorMinor" resultType="productVo">
+        SELECT P.PRODUCT_NUMBER, P.CATEGORY_MAJOR_CODE, P.CATEGORY_MINOR_CODE, P.PRODUCT_NAME, P.PRODUCT_PRICE,
+               P.DISCOUNT_RATE, (P.PRODUCT_PRICE * (1 - P.DISCOUNT_RATE / 100)) AS DISCOUNT_PRICE,
+               P.PRODUCT_EXPLANATION, P.PRODUCT_QUANTITY, P.PRODUCT_REGISTER_DATE, P.PRODUCT_EXPLANATION1,
+               P.PRODUCT_EXPLANATION2, LISTAGG(PS.PRODUCT_SIZES, ',') WITHIN GROUP (ORDER BY PS.PRODUCT_SIZES) AS PRODUCT_SIZES,
+       LISTAGG(PC.PRODUCT_COLORS, ',') WITHIN GROUP (ORDER BY PC.PRODUCT_COLORS) AS PRODUCT_COLORS,
+            U.USER_ID, U.USER_NUMBER, F.FILE_UPLOAD_PATH, F.FILE_UUID, F.FILE_NAME
+        FROM TBL_PRODUCT P
+            JOIN TBL_USER U ON P.USER_NUMBER = U.USER_NUMBER
+            JOIN TBL_FILE F ON F.PRODUCT_NUMBER = P.PRODUCT_NUMBER
+            JOIN (
+            SELECT
+            PRODUCT_NUMBER,
+            LISTAGG(PRODUCT_SIZES, ',') WITHIN GROUP (ORDER BY PRODUCT_SIZES) AS PRODUCT_SIZES
+            FROM  TBL_PRODUCT_SIZE
+            GROUP BY PRODUCT_NUMBER
+            ) PS ON P.PRODUCT_NUMBER = PS.PRODUCT_NUMBER
+            JOIN (
+            SELECT
+            PRODUCT_NUMBER,
+            LISTAGG(PRODUCT_COLORS, ',') WITHIN GROUP (ORDER BY PRODUCT_COLORS) AS PRODUCT_COLORS
+            FROM
+            TBL_PRODUCT_COLOR
+            GROUP BY
+            PRODUCT_NUMBER
+            ) PC ON P.PRODUCT_NUMBER = PC.PRODUCT_NUMBER
+        WHERE P.CATEGORY_MAJOR_CODE =#{categoryMajorCode}
+        AND  P.CATEGORY_MINOR_CODE =#{categoryMinorCode}
+        GROUP BY P.PRODUCT_NUMBER, P.CATEGORY_MAJOR_CODE, P.CATEGORY_MINOR_CODE, P.PRODUCT_NAME, P.PRODUCT_PRICE,
+            P.DISCOUNT_RATE, P.PRODUCT_EXPLANATION, P.PRODUCT_QUANTITY, P.PRODUCT_REGISTER_DATE,
+            P.PRODUCT_EXPLANATION1, P.PRODUCT_EXPLANATION2, U.USER_NUMBER, U.USER_ID, F.FILE_UPLOAD_PATH,
+            F.FILE_UUID, F.FILE_NAME, F.FILE_NUMBER
+    </select>
 
 
     <select id="selectAllProduct" resultType="productVo">
@@ -244,6 +209,8 @@
     </select>
 
 
+
+
     <delete id="delete">
         DELETE FROM TBL_PRODUCT
         WHERE PRODUCT_NUMBER = #{productNumber}
@@ -273,91 +240,6 @@
     <select id="selectTotal" resultType="int">
         SELECT COUNT(PRODUCT_NUMBER) FROM TBL_PRODUCT
     </select>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<!--&lt;!&ndash;장바구니 상품추가 &ndash;&gt;-->
-<!--    <insert id="insertCart" parameterType="cartVo">-->
-<!--        INSERT INTO TBL_CART(CART_NUMBER, PRODUCT_NUMBER,USER_NUMBER,CART_COUNT)-->
-<!--            VALUES (SEQ_CART.nextval,#{productNumber},#{userNumber},#{cartCount})-->
-<!--    </insert>-->
-
-
-<!--    &lt;!&ndash;    장바구니 상품 조회&ndash;&gt;-->
-<!--    <select id="selectCart" resultType="cartVo">-->
-<!--        SELECT C.CART_NUMBER,C.CART_COUNT,-->
-<!--               U.USER_NUMBER,U.USER_ID,-->
-<!--               P.PRODUCT_NUMBER,P.PRODUCT_NAME,P.PRODUCT_COLOR,P.PRODUCT_SIZE,P.PRODUCT_QUANTITY,P.PRODUCT_PRICE,-->
-<!--               p.PRODUCT_QUANTITY * C.CART_COUNT AS TOTAL_COUNT,-->
-<!--               P.PRODUCT_PRICE * C.CART_COUNT AS TOTAL_PRICE,-->
-<!--               F.FILE_NAME,F.FILE_UPLOAD_PATH,F.FILE_UUID-->
-<!--        FROM TBL_USER U-->
-<!--                 JOIN TBL_CART C ON U.USER_NUMBER = C.USER_NUMBER-->
-<!--                 JOIN  TBL_PRODUCT P ON P.PRODUCT_NUMBER = C.PRODUCT_NUMBER-->
-<!--                 LEFT JOIN TBL_FILE F ON F.PRODUCT_NUMBER =  P.PRODUCT_NUMBER-->
-<!--        WHERE U.USER_NUMBER=#{userNumber}-->
-<!--    </select>-->
-
-
-
-<!--    &lt;!&ndash;    특정 회원, 특정 상품의 카트 번호 조회&ndash;&gt;-->
-<!--    <select id="selectCartNumber" resultType="Long">-->
-<!--        SELECT CART_NUMBER-->
-<!--        FROM TBL_CART-->
-<!--        WHERE USER_NUMBER=#{userNumber} AND PRODUCT_NUMBER=#{productNumber}-->
-<!--    </select>-->
-
-
-
-<!--    &lt;!&ndash;    장바구지 상품 수량 추가&ndash;&gt;-->
-<!--    <update id="addCart">-->
-<!--        UPDATE TBL_CART-->
-<!--        SET CART_COUNT = CART_COUNT + #{cartCount}-->
-<!--        WHERE CART_NUMBER = #{cartNumber}-->
-<!--    </update>-->
-
-<!--    &lt;!&ndash;    장바구니 상품 수량 변경&ndash;&gt;-->
-<!--    <update id="updateCartPlus">-->
-<!--        UPDATE TBL_CART-->
-<!--        SET CART_COUNT = #{cartCount}-->
-<!--        WHERE CART_NUMBER = #{cartNumber}-->
-<!--    </update>-->
-
-<!--    &lt;!&ndash;장바구니 상품 수량 감소&ndash;&gt;-->
-<!--    <update id="minusCart">-->
-<!--        UPDATE TBL_CART-->
-<!--        SET CART_COUNT = #{cartCount} - CART_COUNT-->
-<!--        WHERE CART_NUMBER = #{cartNumber}-->
-<!--    </update>-->
-
-
-<!--    &lt;!&ndash;    장바구니 상품 삭제&ndash;&gt;-->
-<!--    <delete id="deleteCart">-->
-<!--        DELETE-->
-<!--        FROM TBL_CART-->
-<!--        WHERE CART_NUMBER = #{cartNumber}-->
-<!--    </delete>-->
-
-
-
-
-
-
 
 
 

@@ -13,10 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -26,29 +23,29 @@ public class ProductService {
     private final FileMapper fileMapper;
 
 
-    public int registerProduct(ProductDto productDto){
-        if(productDto == null){
+    public int registerProduct(ProductVo productVo){
+        if(productVo == null){
             throw new IllegalArgumentException("정보가 없습니다");
         }
 
-        int result = productMapper.insertProduct(productDto);
+        int result = productMapper.insertProduct(productVo);
         System.out.println("상품 등록완료!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
 
-        List<String> productSizes = productDto.getProductSizes();
+        List<String> productSizes = productVo.getProductSizes();
         if (productSizes != null) {
             for (String Allsize : productSizes) {
                 Map<String, Object> paramMap = new HashMap<>();
-                paramMap.put("productNumber", productDto.getProductNumber());
+                paramMap.put("productNumber", productVo.getProductNumber());
                 paramMap.put("productSizes", Allsize);
                 productMapper.insertSize(paramMap);
             }
         }
 
-        List<String> productColors = productDto.getProductColors();
+        List<String> productColors = productVo.getProductColors();
         if (productColors != null) {
             for (String color : productColors) {
                 Map<String, Object> colorParamMap = new HashMap<>();
-                colorParamMap.put("productNumber", productDto.getProductNumber());
+                colorParamMap.put("productNumber", productVo.getProductNumber());
                 colorParamMap.put("productColors", color);
                 productMapper.insertColor(colorParamMap);
             }
@@ -59,23 +56,16 @@ public class ProductService {
         return result;
     }
 
-    // 사이즈 등록
-//        List<String> productSizes = productDto.getProductSizes(); // <- 수정된 부분
-//        for (int i = 0; i < productSizes.size(); i++) {
-//            String size = productSizes.get(i);
-//            Map<String, Object> paramMap = new HashMap<>();
-//            paramMap.put("productNumber", productNumber);
-//            paramMap.put("productSize", size);
-//            productMapper.insertSize(paramMap);
-//        }
-
 
     public List<ProductVo> findOneProduct(Long productNumber){
         if(productNumber == null){
             throw new IllegalArgumentException("상품게시글 번호가 없습니다");
         }
+
+
         return productMapper.selectProduct(productNumber);
     }
+
 
 
 
