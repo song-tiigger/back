@@ -3,11 +3,16 @@
 <mapper namespace="com.go.together.Mapper.CartMapper">
 
 
-    <!--장바구니 상품추가 -->
-    <insert id="insertCart" parameterType="cartVo">
+<!--&lt;!&ndash;    &lt;!&ndash;장바구니 상품추가 &ndash;&gt;&ndash;&gt;-->
+    <insert id="insertCart">
+        <selectKey keyProperty="cartNumber" order="BEFORE" resultType="int">
+            SELECT SEQ_CART.NEXTVAL FROM DUAL
+        </selectKey>
         INSERT INTO TBL_CART(CART_NUMBER, PRODUCT_NUMBER, USER_NUMBER, CART_COUNT, SELECTED_SIZE, SELECTED_COLOR)
-        VALUES (SEQ_CART.nextval, #{productNumber}, #{userNumber}, #{cartCount}, #{selectedSize}, #{selectedColor})
+        VALUES (#{cartNumber}, #{productNumber}, #{userNumber}, #{cartCount}, #{selectedSize}, #{selectedColor})
     </insert>
+
+
 
 <!--    &lt;!&ndash;    장바구니 상품 조회&ndash;&gt;-->
 <!--    <select id="userCartList" resultType="cartVo">-->
